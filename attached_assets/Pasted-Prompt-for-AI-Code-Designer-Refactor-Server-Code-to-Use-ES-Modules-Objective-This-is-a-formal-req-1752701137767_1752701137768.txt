@@ -1,0 +1,34 @@
+Prompt for AI Code Designer: Refactor Server Code to Use ES Modules
+Objective:
+
+This is a formal request to fix a critical deployment error. The project is failing to build on Vercel due to a conflict between CommonJS (require) and ES Module (import) syntax. Your task is to refactor the server-side code to use ES Module syntax exclusively, aligning it with the project's configuration.
+
+1. The Error
+The Vercel build log shows the following fatal error:
+
+ReferenceError: require is not defined in ES module scope, you can use import instead
+This file is being treated as an ES module because it has a '.js' file extension and '/var/task/package.json' contains "type": "module".
+
+2. The Root Cause
+The root package.json file for the project correctly specifies "type": "module". However, one or more files within the server/ directory are still using the older CommonJS require() syntax (e.g., const express = require('express');). This creates a syntax conflict that crashes the Node.js process.
+
+3. Implementation Plan
+Your task is to refactor the server code to resolve this conflict.
+
+Analyze Server Files: Systematically review all .ts and .js files within the server/ directory.
+
+Convert to ES Modules: For every file that uses CommonJS, you must:
+
+Replace all require() statements with the equivalent import syntax.
+
+Example: Change const express = require('express'); to import express from 'express';.
+
+Replace module.exports statements with the equivalent export default or named export syntax.
+
+Example: Change module.exports = router; to export default router;.
+
+Maintain Logic: The core application logic must remain identical. This is a syntax refactoring task only. Do not change the functionality.
+
+Provide Updated Files: Your final output should be the complete, corrected code for all modified files within the server/ directory. Each file should be clearly labeled with its full path (e.g., server/index.ts, server/routes.ts).
+
+By completing this refactoring, the deployment error will be resolved.

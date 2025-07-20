@@ -1,0 +1,73 @@
+The Netlify deploy errored, with the following guidance provided:
+
+### Diagnosis
+The build failure is due to a error with the Vite build process. It failed to resolve an import from `@/components/ui/toaster` in the file `client/src/App.tsx`.
+
+### Solution
+To fix this issue:
+1. Verify that the package `@/components/ui/toaster` is correctly included in the `package.json` file or was committed to the repository.
+2. If the package is present, explicitly add it to the `build.rollupOptions.external` configuration to prevent the error. You can refer to the [Vite documentation](https://vitejs.dev/config/#build-rollupoptions) for more information on how to configure `build.rollupOptions.external`.
+
+The relevant error logs are:
+
+Line 0: build-image version: bbc21dac11d2294a9d0d8a7cf18850f179f7f76b (noble)
+Line 1: buildbot version: bbc21dac11d2294a9d0d8a7cf18850f179f7f76b
+Line 2: Fetching cached dependencies
+Line 3: Failed to fetch cache, continuing with build
+Line 4: Starting to prepare the repo for build
+Line 5: No cached dependencies found. Cloning fresh repo
+Line 6: git clone --filter=blob:none https://github.com/BRITANNIAFORGELTD/britannia-forge
+Line 7: Preparing Git Reference refs/heads/main
+Line 8: Custom publish path detected. Proceeding with the specified path: 'client/dist'
+Line 9: Custom functions path detected. Proceeding with the specified path: 'client/netlify/functions'
+Line 10: Starting to install dependencies
+Line 11: Using PHP version
+Line 12: v22.17.1 is already installed.
+Line 13: Now using node v22.17.1 (npm v10.9.2)
+Line 51: [96m[1m​[22m[39m
+Line 52: [96m[1mBuild command from Netlify app                                [22m[39m
+Line 53: [96m[1m────────────────────────────────────────────────────────────────[22m[39m
+Line 54: ​
+Line 55: [36m$ npm run build[39m
+Line 56: > britannia-forge-client@0.0.0 build
+Line 57: > npx vite build
+Line 58: [36mvite v5.4.19 [32mbuilding for production...[36m[39m
+Line 59: transforming...
+Line 60: [32m✓[39m 4 modules transformed.
+Line 61: [31mx[39m Build failed in 87ms
+Line 62: [31merror during build:
+Line 63: [31m[vite]: Rollup failed to resolve import "@/components/ui/toaster" from "/opt/build/repo/client/src/App.tsx".
+Line 64: This is most likely unintended because it can break your application at runtime.
+Line 65: If you do want to externalize this module explicitly add it to
+Line 66: `build.rollupOptions.external`[31m
+Line 67:     at viteWarn (file:///opt/build/repo/client/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:65839:17)
+Line 68:     at onwarn (file:///opt/build/repo/client/node_modules/@vitejs/plugin-react/dist/index.js:90:7)
+Line 69:     at onRollupWarning (file:///opt/build/repo/client/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:65869:5)
+Line 70:     at onwarn (file:///opt/build/repo/client/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:65534:7)
+Line 71:     at file:///opt/build/repo/client/node_modules/rollup/dist/es/shared/node-entry.js:20832:13
+Line 72:     at Object.logger [as onLog] (file:///opt/build/repo/client/node_modules/rollup/dist/es/shared/node-entry.js:22698:9)
+Line 73:     at ModuleLoader.handleInvalidResolvedId (file:///opt/build/repo/client/node_modules/rollup/dist/es/shared/node-entry.js:2144
+Line 74:     at file:///opt/build/repo/client/node_modules/rollup/dist/es/shared/node-entry.js:21402:26[39m
+Line 75: [91m[1m​[22m[39m
+Line 76: [91m[1m"build.command" failed                                        [22m[39m
+Line 77: [91m[1m────────────────────────────────────────────────────────────────[22m[39m
+Line 78: ​
+Line 79:   [31m[1mError message[22m[39m
+Line 80:   Command failed with exit code 1: npm run build
+Line 81: ​
+Line 82:   [31m[1mError location[22m[39m
+Line 83:   In Build command from Netlify app:
+Line 84:   npm run build
+Line 85: ​
+Line 86:   [31m[1mResolved config[22m[39m
+Line 87:   build:
+Line 88:     base: /opt/build/repo/client
+Line 89:     command: npm run build
+Line 90:     commandOrigin: ui
+Line 91:     publish: /opt/build/repo/client/dist
+Line 92:     publishOrigin: ui
+Line 93:   functionsDirectory: /opt/build/repo/client/netlify/functions
+Line 94: Failed during stage 'building site': Build script returned non-zero exit code: 2
+Line 95: Build failed due to a user error: Build script returned non-zero exit code: 2
+Line 96: Failing build: Failed to build site
+Line 97: Finished processing build request in 28.412s

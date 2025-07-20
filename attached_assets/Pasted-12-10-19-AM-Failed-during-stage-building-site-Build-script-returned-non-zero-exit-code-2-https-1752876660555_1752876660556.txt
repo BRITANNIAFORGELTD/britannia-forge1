@@ -1,0 +1,63 @@
+12:10:19 AM: Failed during stage 'building site': Build script returned non-zero exit code: 2 (https://ntl.fyi/exit-code-2)
+12:10:17 AM: Netlify Build                                                 
+12:10:17 AM: ────────────────────────────────────────────────────────────────
+12:10:17 AM: ​
+12:10:17 AM: ❯ Version
+12:10:17 AM:   @netlify/build 34.2.5
+12:10:17 AM: ​
+12:10:17 AM: ❯ Flags
+12:10:17 AM:   accountId: 6879fd5291a98f14c32c500e
+12:10:17 AM:   baseRelDir: true
+12:10:17 AM:   buildId: 687ac6185032374bb2e9ee9b
+12:10:17 AM:   deployId: 687ac6185032374bb2e9ee9d
+12:10:17 AM: ​
+12:10:17 AM: ❯ Current directory
+12:10:17 AM:   /opt/build/repo/client
+12:10:17 AM: ​
+12:10:17 AM: ❯ Config file
+12:10:17 AM:   /opt/build/repo/netlify.toml
+12:10:17 AM: ​
+12:10:17 AM: ❯ Context
+12:10:17 AM:   production
+12:10:17 AM: ​
+12:10:17 AM: build.command from netlify.toml                               
+12:10:17 AM: ────────────────────────────────────────────────────────────────
+12:10:17 AM: ​
+12:10:17 AM: $ npm run build
+12:10:17 AM: > britannia-forge-client@0.0.0 build
+12:10:17 AM: > npx vite build
+12:10:18 AM: vite v5.4.19 building for production...
+12:10:18 AM: transforming...
+12:10:18 AM: warn - The `content` option in your Tailwind CSS configuration is missing or empty.
+12:10:18 AM: warn - Configure your content sources or your generated CSS will be missing styles.
+12:10:18 AM: warn - https://tailwindcss.com/docs/content-configuration
+12:10:18 AM: ✓ 99 modules transformed.
+12:10:18 AM: x Build failed in 620ms
+12:10:18 AM: error during build:
+12:10:18 AM: [vite:asset] Could not load /opt/build/repo/client/src/assets/logo_1752637323721.png (imported by src/pages/about.tsx): ENOENT: no such file or directory, open '/opt/build/repo/client/src/assets/logo_1752637323721.png'
+12:10:18 AM: Error: Could not load /opt/build/repo/client/src/assets/logo_1752637323721.png (imported by src/pages/about.tsx): ENOENT: no such file or directory, open '/opt/build/repo/client/src/assets/logo_1752637323721.png'
+12:10:18 AM: ​
+12:10:18 AM: "build.command" failed                                        
+12:10:18 AM: ────────────────────────────────────────────────────────────────
+12:10:18 AM: ​
+12:10:18 AM:   Error message
+12:10:18 AM:   Command failed with exit code 1: npm run build (https://ntl.fyi/exit-code-1)
+12:10:18 AM: ​
+12:10:18 AM:   Error location
+12:10:18 AM:   In build.command from netlify.toml:
+12:10:18 AM:   npm run build
+12:10:18 AM: ​
+12:10:18 AM:   Resolved config
+12:10:18 AM:   build:
+12:10:18 AM:     base: /opt/build/repo/client
+12:10:18 AM:     command: npm run build
+12:10:18 AM:     commandOrigin: config
+12:10:18 AM:     environment:
+12:10:18 AM:       - NODE_VERSION
+12:10:18 AM:     publish: /opt/build/repo/client/dist
+12:10:18 AM:     publishOrigin: config
+12:10:18 AM:   functionsDirectory: /opt/build/repo/client/netlify/functions
+12:10:19 AM: Build failed due to a user error: Build script returned non-zero exit code: 2
+12:10:19 AM: Failing build: Failed to build site
+12:10:19 AM: Finished processing build request in 32.782s
+Deploying

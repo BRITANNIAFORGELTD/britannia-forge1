@@ -1,0 +1,85 @@
+The Netlify deploy errored, with the following guidance provided:
+
+### Diagnosis
+The build failed with the following error message:
+- **Error**: Build failed with exit code 1.
+- **Location**: Failed during the stage 'building site'.
+- **Specific Error**: Rollup failed to resolve import "@stripe/react-stripe-js" from "/client/src/pages/checkout.tsx".
+
+### Solution
+1. **Verify the Package**: Make sure that the package "@stripe/react-stripe-js" is listed in the `dependencies` or `devDependencies` section of the `package.json` file or was committed to the repository.
+2. **Add to External Configuration**: If the package is verified, explicitly add it to `build.rollupOptions.external` to avoid Rollup failure in Vite.
+
+By confirming the presence of the package in the `package.json` file and adding it to the external configuration if necessary, you should be able to resolve the Rollup failure and successfully build the site.
+
+The relevant error logs are:
+
+Line 21: Finished restoring cached corepack dependencies
+Line 22: No npm workspaces detected
+Line 23: Started restoring cached node modules
+Line 24: Finished restoring cached node modules
+Line 25: Installing npm packages using npm version 10.8.2
+Line 26: added 255 packages in 15s
+Line 27: npm packages installed
+Line 28: Successfully installed dependencies
+Line 29: Starting build script
+Line 30: Detected 1 framework(s)
+Line 31: Failed during stage 'building site': Build script returned non-zero exit code: 2
+Line 32: "vite" at version "5.4.19"
+Line 33: Section completed: initializing
+Line 34: [96m[1m​[22m[39m
+Line 35: [96m[1mNetlify Build                                                 [22m[39m
+Line 36: [96m[1m────────────────────────────────────────────────────────────────[22m[39m
+Line 37: [36m[1m​[22m[39m
+Line 38: [36m[1m❯ Version[22m[39m
+Line 39:   @netlify/build 34.2.5
+Line 40: [36m[1m​[22m[39m
+Line 41: [36m[1m❯ Flags[22m[39m
+Line 58: ​
+Line 59: [36m$ npm run build[39m
+Line 60: > britannia-forge-client@0.0.0 build
+Line 61: > npx vite build
+Line 62: [36mvite v5.4.19 [32mbuilding for production...[36m[39m
+Line 63: transforming...
+Line 64: [1m[33mwarn[39m[22m - The `content` option in your Tailwind CSS configuration is missing or empty.
+Line 65: [1m[33mwarn[39m[22m - Configure your content sources or your generated CSS will be missing styles.
+Line 66: [1m[33mwarn[39m[22m - https://tailwindcss.com/docs/content-configuration
+Line 67: [32m✓[39m 1107 modules transformed.
+Line 68: [31mx[39m Build failed in 1.50s
+Line 69: [31merror during build:
+Line 70: [31m[vite]: Rollup failed to resolve import "@stripe/react-stripe-js" from "/opt/build/repo/client/src/pages/checkout.tsx".
+Line 71: This is most likely unintended because it can break your application at runtime.
+Line 72: If you do want to externalize this module explicitly add it to
+Line 73: `build.rollupOptions.external`[31m
+Line 74:     at viteWarn (file:///opt/build/repo/client/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:65839:17)
+Line 75:     at onwarn (file:///opt/build/repo/client/node_modules/@vitejs/plugin-react/dist/index.js:90:7)
+Line 76:     at onRollupWarning (file:///opt/build/repo/client/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:65869:5)
+Line 77:     at onwarn (file:///opt/build/repo/client/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:65534:7)
+Line 78:     at file:///opt/build/repo/client/node_modules/rollup/dist/es/shared/node-entry.js:20832:13
+Line 79:     at Object.logger [as onLog] (file:///opt/build/repo/client/node_modules/rollup/dist/es/shared/node-entry.js:22698:9)
+Line 80:     at ModuleLoader.handleInvalidResolvedId (file:///opt/build/repo/client/node_modules/rollup/dist/es/shared/node-entry.js:2144
+Line 81:     at file:///opt/build/repo/client/node_modules/rollup/dist/es/shared/node-entry.js:21402:26[39m
+Line 82: [91m[1m​[22m[39m
+Line 83: [91m[1m"build.command" failed                                        [22m[39m
+Line 84: [91m[1m────────────────────────────────────────────────────────────────[22m[39m
+Line 85: ​
+Line 86:   [31m[1mError message[22m[39m
+Line 87:   Command failed with exit code 1: npm run build
+Line 88: ​
+Line 89:   [31m[1mError location[22m[39m
+Line 90:   In build.command from netlify.toml:
+Line 91:   npm run build
+Line 92: ​
+Line 93:   [31m[1mResolved config[22m[39m
+Line 94:   build:
+Line 95:     base: /opt/build/repo/client
+Line 96:     command: npm run build
+Line 97:     commandOrigin: config
+Line 98:     environment:
+Line 99:       - NODE_VERSION
+Line 100:     publish: /opt/build/repo/client/dist
+Line 101:     publishOrigin: config
+Line 102:   functionsDirectory: /opt/build/repo/client/netlify/functions
+Line 103: Build failed due to a user error: Build script returned non-zero exit code: 2
+Line 104: Failing build: Failed to build site
+Line 105: Finished processing build request in 31.273s

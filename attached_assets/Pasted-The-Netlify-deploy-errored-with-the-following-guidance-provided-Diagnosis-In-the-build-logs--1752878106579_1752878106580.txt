@@ -1,0 +1,78 @@
+The Netlify deploy errored, with the following guidance provided:
+
+**Diagnosis:**
+In the build logs, the error points to a failed build with a message stating that Rollup failed to resolve an import for "react-icons/fa" in the file "client/src/components/navigation/footer.tsx". This issue is most likely unintended and can break the application at runtime.
+
+**Solution:**
+1. Verify that the package "react-icons" including the "fa" component is included in the package.json file or was committed to the repository.
+2. To resolve this, explicitly add the "react-icons/fa" module to the `build.rollupOptions.external` configuration.
+3. Ensure that the necessary configuration is in place to prevent Rollup from encountering import resolution issues.
+
+Following these steps should help resolve the build failure related to the Rollup import resolution error.
+
+The relevant error logs are:
+
+Line 0: build-image version: bbc21dac11d2294a9d0d8a7cf18850f179f7f76b (noble)
+Line 1: buildbot version: bbc21dac11d2294a9d0d8a7cf18850f179f7f76b
+Line 2: Fetching cached dependencies
+Line 3: Failed to fetch cache, continuing with build
+Line 4: Starting to prepare the repo for build
+Line 5: No cached dependencies found. Cloning fresh repo
+Line 6: git clone --filter=blob:none https://github.com/BRITANNIAFORGELTD/britannia-forge
+Line 7: Preparing Git Reference refs/heads/main
+Line 8: Custom publish path detected. Proceeding with the specified path: 'client/dist'
+Line 9: Custom functions path detected. Proceeding with the specified path: 'client/netlify/functions'
+Line 10: Starting to install dependencies
+Line 11: Using PHP version
+Line 12: Downloading and installing node v18.20.8...
+Line 13: Downloading https://nodejs.org/dist/v18.20.8/node-v18.20.8-linux-x64.tar.xz...
+Line 56: [96m[1m────────────────────────────────────────────────────────────────[22m[39m
+Line 57: ​
+Line 58: [36m$ npm run build[39m
+Line 59: > britannia-forge-client@0.0.0 build
+Line 60: > npx vite build
+Line 61: [36mvite v5.4.19 [32mbuilding for production...[36m[39m
+Line 62: transforming...
+Line 63: [1m[33mwarn[39m[22m - The `content` option in your Tailwind CSS configuration is missing or empty.
+Line 64: [1m[33mwarn[39m[22m - Configure your content sources or your generated CSS will be missing styles.
+Line 65: [1m[33mwarn[39m[22m - https://tailwindcss.com/docs/content-configuration
+Line 66: Failed during stage 'building site': Build script returned non-zero exit code: 2
+Line 67: [32m✓[39m 1390 modules transformed.
+Line 68: [31mx[39m Build failed in 1.39s
+Line 69: [31merror during build:
+Line 70: [31m[vite]: Rollup failed to resolve import "react-icons/fa" from "/opt/build/repo/client/src/components/navigation/footer.tsx"
+Line 71: This is most likely unintended because it can break your application at runtime.
+Line 72: If you do want to externalize this module explicitly add it to
+Line 73: `build.rollupOptions.external`[31m
+Line 74:     at viteWarn (file:///opt/build/repo/client/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:65839:17)
+Line 75:     at onwarn (file:///opt/build/repo/client/node_modules/@vitejs/plugin-react/dist/index.js:90:7)
+Line 76:     at onRollupWarning (file:///opt/build/repo/client/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:65869:5)
+Line 77:     at onwarn (file:///opt/build/repo/client/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:65534:7)
+Line 78:     at file:///opt/build/repo/client/node_modules/rollup/dist/es/shared/node-entry.js:20832:13
+Line 79:     at Object.logger [as onLog] (file:///opt/build/repo/client/node_modules/rollup/dist/es/shared/node-entry.js:22698:9)
+Line 80:     at ModuleLoader.handleInvalidResolvedId (file:///opt/build/repo/client/node_modules/rollup/dist/es/shared/node-entry.js:2144
+Line 81:     at file:///opt/build/repo/client/node_modules/rollup/dist/es/shared/node-entry.js:21402:26[39m
+Line 82: [91m[1m​[22m[39m
+Line 83: [91m[1m"build.command" failed                                        [22m[39m
+Line 84: [91m[1m────────────────────────────────────────────────────────────────[22m[39m
+Line 85: ​
+Line 86:   [31m[1mError message[22m[39m
+Line 87:   Command failed with exit code 1: npm run build
+Line 88: ​
+Line 89:   [31m[1mError location[22m[39m
+Line 90:   In build.command from netlify.toml:
+Line 91:   npm run build
+Line 92: ​
+Line 93:   [31m[1mResolved config[22m[39m
+Line 94:   build:
+Line 95:     base: /opt/build/repo/client
+Line 96:     command: npm run build
+Line 97:     commandOrigin: config
+Line 98:     environment:
+Line 99:       - NODE_VERSION
+Line 100:     publish: /opt/build/repo/client/dist
+Line 101:     publishOrigin: config
+Line 102:   functionsDirectory: /opt/build/repo/client/netlify/functions
+Line 103: Build failed due to a user error: Build script returned non-zero exit code: 2
+Line 104: Failing build: Failed to build site
+Line 105: Finished processing build request in 28.124s

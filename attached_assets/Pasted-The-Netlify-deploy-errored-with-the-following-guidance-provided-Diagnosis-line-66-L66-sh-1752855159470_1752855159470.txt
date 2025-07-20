@@ -1,0 +1,91 @@
+The Netlify deploy errored, with the following guidance provided:
+
+**Diagnosis:**
+[line 66](#L66) shows that the build failed.
+[line 67](#L67) indicates a Rollup error in resolving an import for "@assets/logo_1752637323721.png" in "/opt/build/repo/client/src/pages/about.tsx".
+
+**Error Type:**
+Rollup failed to resolve the import which can break the application at runtime.
+
+**Cause:**
+The import for "@assets/logo_1752637323721.png" in "/opt/build/repo/client/src/pages/about.tsx" is not resolved by Rollup.
+
+**Solution:**
+To fix this issue:
+1. Ensure that the file `@assets/logo_1752637323721.png` exists in the correct location within your project.
+2. If the file exists, verify that Rollup can resolve the import path correctly.
+3. If the file is part of the project, add it to `build.rollupOptions.external` to explicitly tell Rollup to handle it.
+
+If the file is missing, add it to the project and ensure it is committed to the repository.
+
+The relevant error logs are:
+
+Line 16: Now using node v18.20.8 (npm v10.8.2)
+Line 17: Enabling Node.js Corepack
+Line 18: Started restoring cached build plugins
+Line 19: Finished restoring cached build plugins
+Line 20: Started restoring cached corepack dependencies
+Line 21: Finished restoring cached corepack dependencies
+Line 22: No npm workspaces detected
+Line 23: Started restoring cached node modules
+Line 24: Finished restoring cached node modules
+Line 25: Installing npm packages using npm version 10.8.2
+Line 26: Failed during stage 'building site': Build script returned non-zero exit code: 2
+Line 27: added 255 packages in 17s
+Line 28: npm packages installed
+Line 29: Successfully installed dependencies
+Line 30: Starting build script
+Line 31: Detected 1 framework(s)
+Line 32: "vite" at version "5.4.19"
+Line 33: Section completed: initializing
+Line 34: [96m[1m​[22m[39m
+Line 35: [96m[1mNetlify Build                                                 [22m[39m
+Line 36: [96m[1m────────────────────────────────────────────────────────────────[22m[39m
+Line 55: [96m[1m​[22m[39m
+Line 56: [96m[1mbuild.command from netlify.toml                               [22m[39m
+Line 57: [96m[1m────────────────────────────────────────────────────────────────[22m[39m
+Line 58: ​
+Line 59: [36m$ npm run build[39m
+Line 60: > britannia-forge-client@0.0.0 build
+Line 61: > npx vite build
+Line 62: [36mvite v5.4.19 [32mbuilding for production...[36m[39m
+Line 63: transforming...
+Line 64: [32m✓[39m 129 modules transformed.
+Line 65: [31mx[39m Build failed in 659ms
+Line 66: [31merror during build:
+Line 67: [31m[vite]: Rollup failed to resolve import "@assets/logo_1752637323721.png" from "/opt/build/repo/client/src/pages/about.tsx".
+Line 68: This is most likely unintended because it can break your application at runtime.
+Line 69: If you do want to externalize this module explicitly add it to
+Line 70: `build.rollupOptions.external`[31m
+Line 71:     at viteWarn (file:///opt/build/repo/client/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:65839:17)
+Line 72:     at onwarn (file:///opt/build/repo/client/node_modules/@vitejs/plugin-react/dist/index.js:90:7)
+Line 73:     at onRollupWarning (file:///opt/build/repo/client/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:65869:5)
+Line 74:     at onwarn (file:///opt/build/repo/client/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:65534:7)
+Line 75:     at file:///opt/build/repo/client/node_modules/rollup/dist/es/shared/node-entry.js:20832:13
+Line 76:     at Object.logger [as onLog] (file:///opt/build/repo/client/node_modules/rollup/dist/es/shared/node-entry.js:22698:9)
+Line 77:     at ModuleLoader.handleInvalidResolvedId (file:///opt/build/repo/client/node_modules/rollup/dist/es/shared/node-entry.js:2144
+Line 78:     at file:///opt/build/repo/client/node_modules/rollup/dist/es/shared/node-entry.js:21402:26[39m
+Line 79: [91m[1m​[22m[39m
+Line 80: [91m[1m"build.command" failed                                        [22m[39m
+Line 81: [91m[1m────────────────────────────────────────────────────────────────[22m[39m
+Line 82: ​
+Line 83:   [31m[1mError message[22m[39m
+Line 84:   Command failed with exit code 1: npm run build
+Line 85: ​
+Line 86:   [31m[1mError location[22m[39m
+Line 87:   In build.command from netlify.toml:
+Line 88:   npm run build
+Line 89: ​
+Line 90:   [31m[1mResolved config[22m[39m
+Line 91:   build:
+Line 92:     base: /opt/build/repo/client
+Line 93:     command: npm run build
+Line 94:     commandOrigin: config
+Line 95:     environment:
+Line 96:       - NODE_VERSION
+Line 97:     publish: /opt/build/repo/client/dist
+Line 98:     publishOrigin: config
+Line 99:   functionsDirectory: /opt/build/repo/client/netlify/functions
+Line 100: Build failed due to a user error: Build script returned non-zero exit code: 2
+Line 101: Failing build: Failed to build site
+Line 102: Finished processing build request in 28.869s

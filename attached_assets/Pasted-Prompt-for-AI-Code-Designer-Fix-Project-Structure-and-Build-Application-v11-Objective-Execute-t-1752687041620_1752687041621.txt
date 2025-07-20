@@ -1,0 +1,121 @@
+Prompt for AI Code Designer: Fix Project Structure and Build Application (v11)
+Objective:
+
+Execute the final fix for the project's deployment issues by creating a dedicated package.json for the frontend application. Then, using this corrected structure, build the complete boiler-installation-quote.html page by merging the best UI/UX of a multi-step wizard with the sophisticated, data-driven pricing engine from the "Britannia Forge Pricing Bible."
+
+Phase 1: Fix the Project Structure (CRITICAL)
+Task: Create the missing package.json file for the client-side application. This is the definitive step to fix the vite: command not found deployment error.
+
+File to Create: client/package.json
+
+Instructions: Create a new file named package.json and place it directly inside the client folder in the repository.
+
+File Content: Use the following code for the new client/package.json file. This provides the necessary instructions for Vercel to build the frontend.
+
+{
+  "name": "britannia-forge-client",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "lucide-react": "^0.453.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.1",
+    "vite": "^5.2.0"
+  }
+}
+
+Action for Root package.json: After creating the new file above, the AI should be instructed to remove the frontend-specific devDependencies from the main package.json in the root directory to avoid conflicts.
+
+Phase 2: Build the High-Fidelity Application
+Task: Create the boiler-installation-quote.html page (or modify the main index.html within the client folder) to contain the full application.
+
+CRITICAL INSTRUCTIONS:
+
+Adopt Multi-Step Wizard UI: The primary structure must be the user-friendly, multi-step <fieldset> wizard with "Next" and "Previous" buttons and a progress bar.
+
+Implement Advanced Pricing Engine: The JavaScript logic must be rebuilt around the comprehensive PRICING_BIBLE data model provided below.
+
+Full Functionality: All JavaScript for step-by-step navigation, conditional field visibility, robust form validation, and real-time quote calculation must be included and fully functional.
+
+New Data Model (The "Pricing Bible"):
+Incorporate this exact data structure into the <script> tag.
+
+const PRICING_BIBLE = {
+    boilers: [
+        // Budget Combi
+        { id: 'baxi_600_24', type: 'combi', tier: 'Budget', brand: 'Baxi', model: '600 Combi', kw: 24, flow_rate: 10.2, warranty: 7, supply_price: 650, min_demand_score: 0 },
+        { id: 'ideal_logic_c24', type: 'combi', tier: 'Budget', brand: 'Ideal', model: 'Logic Combi C24', kw: 24.2, flow_rate: 9.9, warranty: 2, supply_price: 870, min_demand_score: 0 },
+
+        // Mid-Range Combi
+        { id: 'wb_gs4000_25', type: 'combi', tier: 'Mid-Range', brand: 'Worcester Bosch', model: 'Greenstar 4000', kw: 25, flow_rate: 10.2, warranty: 10, supply_price: 1150, min_demand_score: 0 },
+        { id: 'baxi_800_30', type: 'combi', tier: 'Mid-Range', brand: 'Baxi', model: '800 Combi 2', kw: 30, flow_rate: 12.2, warranty: 10, supply_price: 1100, min_demand_score: 15 },
+
+        // Premium Combi
+        { id: 'vaillant_ep832', type: 'combi', tier: 'Premium', brand: 'Vaillant', model: 'ecoTEC Plus 832', kw: 31.8, flow_rate: 13.0, warranty: 10, supply_price: 1400, min_demand_score: 18 },
+        { id: 'wb_gs8000_35', type: 'combi', tier: 'Premium', brand: 'Worcester Bosch', model: 'Greenstar 8000 Style', kw: 35, flow_rate: 14.3, warranty: 12, supply_price: 1600, min_demand_score: 22 },
+        { id: 'vaillant_ep838', type: 'combi', tier: 'Premium', brand: 'Vaillant', model: 'ecoTEC Plus 838', kw: 38.7, flow_rate: 15.9, warranty: 10, supply_price: 1450, min_demand_score: 25 },
+
+        // System Boilers
+        { id: 'ideal_logic_s18', type: 'system', tier: 'Budget', brand: 'Ideal', model: 'Logic+ System S18', kw: 18, warranty: 7, supply_price: 1130, min_demand_score: 0 },
+        { id: 'wb_gs4000_sys18', type: 'system', tier: 'Mid-Range', brand: 'Worcester Bosch', model: 'Greenstar 4000 System', kw: 18, warranty: 10, supply_price: 1250, min_demand_score: 0 },
+        { id: 'vaillant_ep618', type: 'system', tier: 'Mid-Range', brand: 'Vaillant', model: 'ecoTEC Plus 618', kw: 18, warranty: 10, supply_price: 935, min_demand_score: 0 },
+        { id: 'viessmann_v100w_25', type: 'system', tier: 'Premium', brand: 'Viessmann', model: 'Vitodens 100-W System', kw: 25, warranty: 12, supply_price: 1850, min_demand_score: 20 }
+    ],
+    upgrades: {
+        thermostats: [
+            { id: 'thermo_standard', name: 'Standard Wireless Thermostat', price: 0, included: true },
+            { id: 'thermo_smart', name: 'Smart Learning Thermostat (e.g., Nest)', price: 70 },
+            { id: 'thermo_premium', name: 'Premium Smart Controls', price: 100 }
+        ]
+    },
+    adjustments: {
+        labour_base: 1950, // 1400 (labour) + 150 (filter) + 400 (flush)
+        system_conversion: 650,
+        condensate_pump: 250,
+        high_floor_no_lift: 150,
+        paid_parking_per_day: 40
+    }
+};
+
+Detailed UI and Logic Requirements:
+Structure: Use a multi-step <fieldset> wizard with a progress bar.
+
+Step 1: Property Details: Include conditional fields for flats (floor level, lift access).
+
+Step 2: System Details: Include "Other" options with text inputs for both current boiler type and location.
+
+Step 3: Site & Safety: Include conditional logic for drain distance.
+
+Step 4: Logistics & Access: Include parking options.
+
+Step 5: Diagnostic Photos: Implement the full grid of 9 mandatory and 3 optional photo uploaders with "Upload File" and "Take Photo" functionality.
+
+Step 6: Boiler & Upgrades:
+
+Implement the full demandScore and targetBoilerType logic, including the high-demand warning.
+
+Dynamically render the three tiers of boiler packages.
+
+Display the thermostat options as selectable cards, with the standard one selected by default at "+ £0.00".
+
+Display the mandatory, included System Protection items (filter and flush) as a non-interactive list.
+
+Step 7: Booking & Confirmation: Implement date selection, contact fields, discount code, and the mandatory terms checkbox linked to the "Pay Deposit" button.
+
+Quote Summary: The sticky sidebar must update in real-time, categorizing all costs correctly based on the PRICING_BIBLE.
+
+Final Output:
+
+Provide the full code for the client/package.json file and the main HTML file (e.g., client/index.html) containing the complete structure and JavaScript for the application.

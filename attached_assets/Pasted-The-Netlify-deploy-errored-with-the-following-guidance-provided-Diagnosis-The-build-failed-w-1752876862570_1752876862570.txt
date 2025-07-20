@@ -1,0 +1,88 @@
+The Netlify deploy errored, with the following guidance provided:
+
+**Diagnosis:**
+The build failed with the error `ENOENT: no such file or directory` while trying to load a specific image (`logo_1752637323721.png`) in a file (`src/pages/about.tsx`) during the build process.
+
+**Solution:**
+1. Verify that the `logo_1752637323721.png` file is present in the correct directory (`/client/src/assets/`) and that it is committed to the repository.
+2. Ensure that the path to the image file is correct and matches the actual location in the project.
+3. If the image file exists in the repository, confirm that the casing of the filename in the import statement matches the actual filename in the directory.
+4. Update the import path in the `src/pages/about.tsx` file to point to the correct location or correct filename of the image file.
+5. Re-run the build process after making these adjustments to resolve the `ENOENT` error.
+
+The relevant error logs are:
+
+Line 0: Waiting for other deploys from your team to complete. Check the queue: https://app.netlify.com/teams/britanniaforgeltd/builds
+Line 1: build-image version: bbc21dac11d2294a9d0d8a7cf18850f179f7f76b (noble)
+Line 2: buildbot version: bbc21dac11d2294a9d0d8a7cf18850f179f7f76b
+Line 3: Fetching cached dependencies
+Line 4: Failed to fetch cache, continuing with build
+Line 5: Starting to prepare the repo for build
+Line 6: No cached dependencies found. Cloning fresh repo
+Line 7: git clone --filter=blob:none https://github.com/BRITANNIAFORGELTD/britannia-forge
+Line 8: Preparing Git Reference refs/heads/main
+Line 9: Custom publish path detected. Proceeding with the specified path: 'client/dist'
+Line 10: Custom functions path detected. Proceeding with the specified path: 'client/netlify/functions'
+Line 11: Starting to install dependencies
+Line 12: Using PHP version
+Line 13: Downloading and installing node v18.20.8...
+Line 14: Downloading https://nodejs.org/dist/v18.20.8/node-v18.20.8-linux-x64.tar.xz...
+Line 17: Now using node v18.20.8 (npm v10.8.2)
+Line 18: Enabling Node.js Corepack
+Line 19: Started restoring cached build plugins
+Line 20: Finished restoring cached build plugins
+Line 21: Started restoring cached corepack dependencies
+Line 22: Finished restoring cached corepack dependencies
+Line 23: No npm workspaces detected
+Line 24: Started restoring cached node modules
+Line 25: Finished restoring cached node modules
+Line 26: Installing npm packages using npm version 10.8.2
+Line 27: Failed during stage 'building site': Build script returned non-zero exit code: 2
+Line 28: added 255 packages in 19s
+Line 29: npm packages installed
+Line 30: Successfully installed dependencies
+Line 31: Starting build script
+Line 32: Detected 1 framework(s)
+Line 33: "vite" at version "5.4.19"
+Line 34: Section completed: initializing
+Line 35: [96m[1m​[22m[39m
+Line 36: [96m[1mNetlify Build                                                 [22m[39m
+Line 37: [96m[1m────────────────────────────────────────────────────────────────[22m[39m
+Line 59: ​
+Line 60: [36m$ npm run build[39m
+Line 61: > britannia-forge-client@0.0.0 build
+Line 62: > npx vite build
+Line 63: [36mvite v5.4.19 [32mbuilding for production...[36m[39m
+Line 64: transforming...
+Line 65: [1m[33mwarn[39m[22m - The `content` option in your Tailwind CSS configuration is missing or empty.
+Line 66: [1m[33mwarn[39m[22m - Configure your content sources or your generated CSS will be missing styles.
+Line 67: [1m[33mwarn[39m[22m - https://tailwindcss.com/docs/content-configuration
+Line 68: [32m✓[39m 99 modules transformed.
+Line 69: [31mx[39m Build failed in 620ms
+Line 70: [31merror during build:
+Line 71: [31m[vite:asset] Could not load /opt/build/repo/client/src/assets/logo_1752637323721.png (imported by src/pages/about.tsx): ENO
+Line 72: Error: Could not load /opt/build/repo/client/src/assets/logo_1752637323721.png (imported by src/pages/about.tsx): ENOENT: no suc
+Line 73: [91m[1m​[22m[39m
+Line 74: [91m[1m"build.command" failed                                        [22m[39m
+Line 75: [91m[1m────────────────────────────────────────────────────────────────[22m[39m
+Line 76: ​
+Line 77:   [31m[1mError message[22m[39m
+Line 78:   Command failed with exit code 1: npm run build
+Line 79: ​
+Line 80:   [31m[1mError location[22m[39m
+Line 81:   In build.command from netlify.toml:
+Line 82:   npm run build
+Line 83: ​
+Line 84:   [31m[1mResolved config[22m[39m
+Line 85:   build:
+Line 86:     base: /opt/build/repo/client
+Line 87:     command: npm run build
+Line 88:     commandOrigin: config
+Line 89:     environment:
+Line 90:       - NODE_VERSION
+Line 91:     publish: /opt/build/repo/client/dist
+Line 92:     publishOrigin: config
+Line 93:   functionsDirectory: /opt/build/repo/client/netlify/functions
+Line 94: Build failed due to a user error: Build script returned non-zero exit code: 2
+Line 95: Failing build: Failed to build site
+Line 96: Finished processing build request in 32.782s

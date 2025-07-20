@@ -1,0 +1,68 @@
+
+5:10:54 PM: Netlify Build                                                 
+5:10:54 PM: ────────────────────────────────────────────────────────────────
+5:10:54 PM: ​
+5:10:54 PM: ❯ Version
+5:10:54 PM:   @netlify/build 34.2.5
+5:10:54 PM: ​
+5:10:54 PM: ❯ Flags
+5:10:54 PM:   accountId: 6879fd5291a98f14c32c500e
+5:10:54 PM:   baseRelDir: true
+5:10:54 PM:   buildId: 687a63e2fbfcf80008858a11
+5:10:54 PM:   deployId: 687a63e3fbfcf80008858a13
+5:10:54 PM: ​
+5:10:54 PM: ❯ Current directory
+5:10:54 PM:   /opt/build/repo/client
+5:10:54 PM: ​
+5:10:54 PM: ❯ Config file
+5:10:54 PM:   No config file was defined: using default values.
+5:10:54 PM: ​
+5:10:54 PM: ❯ Context
+5:10:54 PM:   production
+5:10:54 PM: ​
+5:10:54 PM: Build command from Netlify app                                
+5:10:54 PM: ────────────────────────────────────────────────────────────────
+5:10:54 PM: ​
+5:10:54 PM: $ npm run build
+5:10:54 PM: > britannia-forge-client@0.0.0 build
+5:10:54 PM: > npx vite build
+5:10:55 PM: vite v5.4.19 building for production...
+5:10:55 PM: transforming...
+5:10:55 PM: ✓ 4 modules transformed.
+5:10:55 PM: x Build failed in 87ms
+5:10:55 PM: error during build:
+5:10:55 PM: [vite]: Rollup failed to resolve import "@/components/ui/toaster" from "/opt/build/repo/client/src/App.tsx".
+5:10:55 PM: This is most likely unintended because it can break your application at runtime.
+5:10:55 PM: If you do want to externalize this module explicitly add it to
+5:10:55 PM: `build.rollupOptions.external`
+5:10:55 PM:     at viteWarn (file:///opt/build/repo/client/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:65839:17)
+5:10:55 PM:     at onwarn (file:///opt/build/repo/client/node_modules/@vitejs/plugin-react/dist/index.js:90:7)
+5:10:55 PM:     at onRollupWarning (file:///opt/build/repo/client/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:65869:5)
+5:10:55 PM:     at onwarn (file:///opt/build/repo/client/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:65534:7)
+5:10:55 PM:     at file:///opt/build/repo/client/node_modules/rollup/dist/es/shared/node-entry.js:20832:13
+5:10:55 PM:     at Object.logger [as onLog] (file:///opt/build/repo/client/node_modules/rollup/dist/es/shared/node-entry.js:22698:9)
+5:10:55 PM:     at ModuleLoader.handleInvalidResolvedId (file:///opt/build/repo/client/node_modules/rollup/dist/es/shared/node-entry.js:21444:26)
+5:10:55 PM:     at file:///opt/build/repo/client/node_modules/rollup/dist/es/shared/node-entry.js:21402:26
+5:10:55 PM: ​
+5:10:55 PM: "build.command" failed                                        
+5:10:55 PM: ────────────────────────────────────────────────────────────────
+5:10:55 PM: ​
+5:10:55 PM:   Error message
+5:10:55 PM:   Command failed with exit code 1: npm run build
+5:10:55 PM: ​
+5:10:55 PM:   Error location
+5:10:55 PM:   In Build command from Netlify app:
+5:10:55 PM:   npm run build
+5:10:55 PM: ​
+5:10:55 PM:   Resolved config
+5:10:55 PM:   build:
+5:10:55 PM:     base: /opt/build/repo/client
+5:10:55 PM:     command: npm run build
+5:10:55 PM:     commandOrigin: ui
+5:10:55 PM:     publish: /opt/build/repo/client/dist
+5:10:55 PM:     publishOrigin: ui
+5:10:55 PM:   functionsDirectory: /opt/build/repo/client/netlify/functions
+5:10:56 PM: Build failed due to a user error: Build script returned non-zero exit code: 2
+5:10:56 PM: Failing build: Failed to build site
+5:10:56 PM: Finished processing build request in 28.412s
+5:10:56 PM: Failed during stage 'building site': Build script returned non-zero exit code: 2

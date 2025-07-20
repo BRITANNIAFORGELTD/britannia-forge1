@@ -1,0 +1,62 @@
+Prompt for AI Code Designer: Definitive Overhaul of the Intelligent Quote Engine (v2)
+Objective:
+
+This is a formal directive to execute a complete, two-phase overhaul of the "Boiler Quote" application. The current prototype has significant logical flaws and UI/UX issues. Your task is to first architect and build a new, standalone Intelligent Quote Engine based on comprehensive real-world data. In the second phase, you will build the high-fidelity React components that consume this engine to create a market-leading user experience.
+
+Phase 1: Architect and Build the "Intelligent Quote Engine"
+Task: Create the "brain" of our quotation system. This will be a new, self-contained TypeScript module responsible for all complex calculations and recommendations.
+
+File to Create: client/src/lib/intelligent-quote-engine.ts
+
+Core Logic Requirements:
+
+Data Integration: The engine must be built to use the data from the provided CSV files (Boilers_rows.csv, Labour_Costs_rows.csv, Sundries_rows.csv, Boiler_Conversion_Scenarios.csv, etc.). You will need to parse and structure this data internally.
+
+Heat Load Calculation: Implement a professional calculateHeatLoad function based on the property details and the standards outlined in the "Comprehensive Analysis" PDF.
+
+Intelligent Boiler Sizing (calculateOptimalBoilerSize): This function must be highly sophisticated. It will take property details as input and, by cross-referencing the "Boiler Sizing Guide" (Table 4) and the "Boiler Conversion Scenarios," it will determine the precise, recommended boiler kW output.
+
+Genius Boiler Type Selection (determineOptimalBoilerType): This is the core logic.
+
+It must analyze the number of bathrooms and occupants to determine if a combi boiler is professionally sound.
+
+If a user's property (e.g., 4+ beds, 3+ baths) makes a combi boiler unsuitable, the function must override the user's preference and recommend a "System Boiler."
+
+It must be able to recommend "Combi," "System," or "Regular" boiler types based on a full analysis of the property and the conversion scenarios.
+
+Cylinder Sizing (calculateCylinderCapacity): If a System or Regular boiler is recommended, this function must use the "Unvented Cylinder Sizing Guide" (Table 5) to recommend the correct cylinder capacity (e.g., 210L, 250L, 300L+).
+
+Price Calculation: The engine must have a main function, calculateIntelligentQuote, that takes the user's full set of answers and returns a detailed price breakdown, including:
+
+Boiler & Cylinder Costs: Pulled from the Boilers_rows.csv data.
+
+Labour Costs: Pulled from Labour_Costs_rows.csv, intelligently selecting the correct price based on the Job Type (e.g., "Combi Boiler Replacement (like-for-like)" vs. "Conventional to Combi Conversion") and the London Postcode Area.
+
+Sundries & Upgrades: All mandatory warranty items (Magnetic Filter, Power Flush, Standard Wireless Thermostat) must be included in the base price. Optional upgrades (e.g., Smart Thermostats) should be added on top.
+
+Adjustments: Costs for flue extensions (£80 per meter), condensate pumps, high-floor access, and paid parking must be calculated and added where required by the user's answers.
+
+Phase 2: Build the High-Fidelity React UI
+Task: Create the user-facing components that will consume the "Intelligent Quote Engine" from Phase 1.
+
+Files to Create/Modify: client/src/components/QuoteWizard.tsx and related sub-components.
+
+UI & UX Requirements:
+
+Refactor Step 1: Rebuild the "Property Details" step to be perfectly mobile-first, with the Postcode field at the top and the redundant checkboxes removed and replaced with intelligent, elegant questions as previously specified.
+
+Overhaul Photo Uploads: Rebuild the photo upload step to be professional and user-friendly, with "Take Photo" and "Upload File" options, delete/replace functionality, and visual guides for each required shot.
+
+Re-architect Final Steps:
+
+Swap the "Customer Details" and "Payment & Booking" steps.
+
+The new "Quote Presentation" step must display the three tiered boiler packages (Budget, Mid-Range, Premium) as recommended by the engine, with a full, itemized price breakdown.
+
+The new "Booking & Payment" step must include the multi-date selector, customer detail fields (with validation), and the three-stage payment options (Deposit, Materials, Final Balance).
+
+Implement Full User Journey: Build out the final "Booking Confirmed" page and the foundational "Customer Dashboard" component, showing installation progress and engineer details.
+
+Final Output:
+
+Provide the code in two distinct phases. First, deliver the complete code for the intelligent-quote-engine.ts module. Once that is approved, proceed to deliver the code for the React UI components.

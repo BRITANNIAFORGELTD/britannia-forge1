@@ -1,0 +1,32 @@
+Prompt for AI Code Generator: Strategic Alignment & Project Roadmap Execution (v2)
+Objective:
+
+This is a formal directive to align on the updated development strategy for the Britannia Forge project. We will be proceeding based on the findings of your recent "Technical Architecture Report" but with a revised implementation order and stricter workflow requirements.
+
+1. Acknowledgment of Your Analysis
+Your technical report has been reviewed. Your analysis of the existing codebase and technology stack is accurate and appreciated. The proposed feature roadmap (Financing, PDF Generation, etc.) is strategically sound and will be used as our guide for future development sprints.
+
+2. Strategic Update & Reprioritization
+Based on a high-level business decision, the project's implementation order has been revised.
+
+Payment Features Deferred: All payment-related features (Stripe, Klarna, PayPal) are now moved to the final phase of development. The website is currently in a pre-launch phase for testing and feedback, and no live payment functionality should be implemented at this time.
+
+New Immediate Priority: Our sole focus is to continue the iterative refinement of the intelligent quotation engine. This core feature must be perfected before we proceed to any other part of the roadmap.
+
+3. Our New Development Workflow (Reinforced)
+To ensure the highest quality, we are reinforcing our professional, iterative development process. Please confirm your understanding of the following workflow:
+
+Feature-Based Sprints: We will focus on building one major feature at a time. Our current and only sprint is the "Intelligent Quote Engine."
+
+Iterative Prompting: For each feature, I will provide you with a series of detailed prompts. We will refine and improve the code for that single feature until it is perfect.
+
+No Duplicate Files: This is a critical instruction. All modifications must be made by editing the existing, relevant files. Do not create new, duplicate files (e.g., index-v2.html) unless a new file is explicitly requested in the prompt.
+
+Delayed Deployment: You will not be expected to push every minor change to the GitHub repository. We will perfect the code in our development environment. Only once a feature is fully complete and approved will we merge it into the main project.
+
+4. Next Action: Continue Quote Engine Refinement
+Your previous work on the quote engine has been a good start, but as per our director's expert review, it requires further significant improvement to meet our quality standards.
+
+Please prepare to receive the next detailed prompt for further enhancing the logic, UI, and accuracy of the intelligent quotation system.
+
+Your task for now is to acknowledge these updated instructions and confirm you are ready to continue work on the quote engine only.

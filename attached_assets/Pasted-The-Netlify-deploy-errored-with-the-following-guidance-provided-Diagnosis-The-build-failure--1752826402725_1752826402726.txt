@@ -1,0 +1,53 @@
+The Netlify deploy errored, with the following guidance provided:
+
+### Diagnosis:
+The build failure is due to a dependency installation error during the npm install stage.
+
+The specific error is:
+- Line 23: `npm error code E404`
+- Line 24: `npm error 404 Not Found - GET https://registry.npmjs.org/@radix-ui%2freact-button - Not found`
+- Line 26: `npm error 404 '@radix-ui/react-button@^1.1.0' is not in this registry`
+
+### Solution:
+1. Verify that the package `@radix-ui/react-button` is correctly specified in the `package.json` file or was committed to the repository.
+2. If the package is a private package, ensure that the appropriate authentication is set up to access it.
+3. If the package should be available on npm, check for any typos in the package name or version.
+4. If the package is not found or is a private package, consider checking the package name, version, or availability.
+
+
+The relevant error logs are:
+
+Line 0: build-image version: bbc21dac11d2294a9d0d8a7cf18850f179f7f76b (noble)
+Line 1: buildbot version: bbc21dac11d2294a9d0d8a7cf18850f179f7f76b
+Line 2: Fetching cached dependencies
+Line 3: Failed to fetch cache, continuing with build
+Line 4: Starting to prepare the repo for build
+Line 5: No cached dependencies found. Cloning fresh repo
+Line 6: git clone --filter=blob:none https://github.com/BRITANNIAFORGELTD/britannia-forge
+Line 7: Preparing Git Reference refs/heads/main
+Line 8: Custom publish path detected. Proceeding with the specified path: 'client'
+Line 9: Starting to install dependencies
+Line 10: Using PHP version
+Line 11: v22.17.1 is already installed.
+Line 12: Now using node v22.17.1 (npm v10.9.2)
+Line 13: Enabling Node.js Corepack
+Line 14: Started restoring cached build plugins
+Line 15: Finished restoring cached build plugins
+Line 16: Started restoring cached corepack dependencies
+Line 17: Finished restoring cached corepack dependencies
+Line 18: No npm workspaces detected
+Line 19: Started restoring cached node modules
+Line 20: Finished restoring cached node modules
+Line 21: Installing npm packages using npm version 10.9.2
+Line 22: Failed during stage 'Install dependencies': dependency_installation script returned non-zero exit code: 1
+Line 23: npm error code E404
+Line 24: npm error 404 Not Found - GET https://registry.npmjs.org/@radix-ui%2freact-button - Not found
+Line 25: npm error 404
+Line 26: npm error 404  '@radix-ui/react-button@^1.1.0' is not in this registry.
+Line 27: npm error 404
+Line 28: npm error 404 Note that you can also install from a
+Line 29: npm error 404 tarball, folder, http url, or git url.
+Line 30: npm error A complete log of this run can be found in: /opt/buildhome/.npm/_logs/2025-07-18T08_08_13_920Z-debug-0.log
+Line 31: Error during npm install
+Line 32: Failing build: Failed to install dependencies
+Line 33: Finished processing build request in 18.638s

@@ -1,0 +1,249 @@
+Prompt for AI Code Designer: Fix Project Structure and Build Application (v11)
+Objective:
+
+Execute the final fix for the project's deployment issues by creating a dedicated package.json for the frontend application, based on the existing monorepo structure. Then, using this corrected structure, build the complete boiler-installation-quote.html page by merging the best UI/UX of a multi-step wizard with a sophisticated, data-driven pricing engine from the "Britannia Forge Pricing Bible."
+
+Phase 1: Fix the Project Structure (CRITICAL)
+Task: Create the missing package.json file for the client-side application. This is the definitive step to fix the vite: command not found deployment error.
+
+File to Create: client/package.json
+
+Instructions: Create a new file named package.json and place it directly inside the client folder in the repository.
+
+File Content: Use the following code for the new client/package.json file. This provides the necessary instructions for Vercel to build the frontend.
+
+{
+  "name": "britannia-forge-client",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "lucide-react": "^0.453.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.1",
+    "vite": "^5.2.0"
+  }
+}
+
+Action for Root package.json: After creating the new file above, the AI should be instructed to remove the frontend-specific devDependencies from the main package.json in the root directory to avoid conflicts.
+
+Phase 2: Build the High-Fidelity Application
+Task: Create the boiler-installation-quote.html page (or modify the main index.html within the client folder) to contain the full application.
+
+CRITICAL INSTRUCTIONS:
+
+Adopt Multi-Step Wizard UI: The primary structure must be the user-friendly, multi-step <fieldset> wizard with "Next" and "Previous" buttons and a progress bar.
+
+Implement Advanced Pricing Engine: The JavaScript logic must be rebuilt around the comprehensive PRICING_BIBLE data model provided below.
+
+Full Functionality: All JavaScript for step-by-step navigation, conditional field visibility, robust form validation, and real-time quote calculation must be included and fully functional.
+
+New Data Model (The "Pricing Bible"):
+Incorporate this exact data structure into the <script> tag.
+
+const PRICING_BIBLE = {
+    boilers: [
+        // Budget Combi
+        { id: 'baxi_600_24', type: 'combi', tier: 'Budget', brand: 'Baxi', model: '600 Combi', kw: 24, flow_rate: 10.2, warranty: 7, supply_price: 650, min_demand_score: 0 },
+        { id: 'ideal_logic_c24', type: 'combi', tier: 'Budget', brand: 'Ideal', model: 'Logic Combi C24', kw: 24.2, flow_rate: 9.9, warranty: 2, supply_price: 870, min_demand_score: 0 },
+
+        // Mid-Range Combi
+        { id: 'wb_gs4000_25', type: 'combi', tier: 'Mid-Range', brand: 'Worcester Bosch', model: 'Greenstar 4000', kw: 25, flow_rate: 10.2, warranty: 10, supply_price: 1150, min_demand_score: 0 },
+        { id: 'baxi_800_30', type: 'combi', tier: 'Mid-Range', brand: 'Baxi', model: '800 Combi 2', kw: 30, flow_rate: 12.2, warranty: 10, supply_price: 1100, min_demand_score: 15 },
+
+        // Premium Combi
+        { id: 'vaillant_ep832', type: 'combi', tier: 'Premium', brand: 'Vaillant', model: 'ecoTEC Plus 832', kw: 31.8, flow_rate: 13.0, warranty: 10, supply_price: 1400, min_demand_score: 18 },
+        { id: 'wb_gs8000_35', type: 'combi', tier: 'Premium', brand: 'Worcester Bosch', model: 'Greenstar 8000 Style', kw: 35, flow_rate: 14.3, warranty: 12, supply_price: 1600, min_demand_score: 22 },
+        { id: 'vaillant_ep838', type: 'combi', tier: 'Premium', brand: 'Vaillant', model: 'ecoTEC Plus 838', kw: 38.7, flow_rate: 15.9, warranty: 10, supply_price: 1450, min_demand_score: 25 },
+
+        // System Boilers
+        { id: 'ideal_logic_s18', type: 'system', tier: 'Budget', brand: 'Ideal', model: 'Logic+ System S18', kw: 18, warranty: 7, supply_price: 1130, min_demand_score: 0 },
+        { id: 'wb_gs4000_sys18', type: 'system', tier: 'Mid-Range', brand: 'Worcester Bosch', model: 'Greenstar 4000 System', kw: 18, warranty: 10, supply_price: 1250, min_demand_score: 0 },
+        { id: 'vaillant_ep618', type: 'system', tier: 'Mid-Range', brand: 'Vaillant', model: 'ecoTEC Plus 618', kw: 18, warranty: 10, supply_price: 935, min_demand_score: 0 },
+        { id: 'viessmann_v100w_25', type: 'system', tier: 'Premium', brand: 'Viessmann', model: 'Vitodens 100-W System', kw: 25, warranty: 12, supply_price: 1850, min_demand_score: 20 }
+    ],
+    upgrades: {
+        thermostats: [
+            { id: 'thermo_standard', name: 'Standard Wireless Thermostat', price: 0, included: true },
+            { id: 'thermo_smart', name: 'Smart Learning Thermostat (e.g., Nest)', price: 70 },
+            { id: 'thermo_premium', name: 'Premium Smart Controls', price: 100 }
+        ]
+    },
+    adjustments: {
+        labour_base: 1950, // 1400 (labour) + 150 (filter) + 400 (flush)
+        system_conversion: 650,
+        condensate_pump: 250,
+        high_floor_no_lift: 150,
+        paid_parking_per_day: 40
+    }
+};
+
+Detailed UI and Logic Requirements:
+Structure: Use a multi-step <fieldset> wizard with a progress bar.
+
+Step 1: Property Details: Include conditional fields for flats (floor level, lift access).
+
+Step 2: System Details: Include "Other" options with text inputs for both current boiler type and location.
+
+Step 3: Site & Safety: Include conditional logic for drain distance.
+
+Step 4: Logistics & Access: Include parking options.
+
+Step 5: Diagnostic Photos: Implement the full grid of 9 mandatory and 3 optional photo uploaders with "Upload File" and "Take Photo" functionality.
+
+Step 6: Boiler & Upgrades:
+
+Implement the full demandScore and targetBoilerType logic, including the high-demand warning.
+
+Dynamically render the three tiers of boiler packages.
+
+Display the thermostat options as selectable cards, with the standard one selected by default at "+ £0.00".
+
+Display the mandatory, included System Protection items (filter and flush) as a non-interactive list.
+
+Step 7: Booking & Confirmation: Implement date selection, contact fields, discount code, and the mandatory terms checkbox linked to the "Pay Deposit" button.
+
+Quote Summary: The sticky sidebar must update in real-time, categorizing all costs correctly based on the PRICING_BIBLE.
+
+Appendix: Existing Root package.json for Context
+For reference, this is the existing package.json file located at the root of the repository.
+
+{
+  "name": "rest-express",
+  "version": "1.0.0",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "dev": "NODE_ENV=development tsx server/index.ts",
+    "build": "vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
+    "start": "NODE_ENV=production node dist/index.js",
+    "check": "tsc",
+    "db:push": "drizzle-kit push"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^3.10.0",
+    "@jridgewell/trace-mapping": "^0.3.25",
+    "@neondatabase/serverless": "^0.10.4",
+    "@radix-ui/react-accordion": "^1.2.4",
+    "@radix-ui/react-alert-dialog": "^1.1.7",
+    "@radix-ui/react-aspect-ratio": "^1.1.3",
+    "@radix-ui/react-avatar": "^1.1.4",
+    "@radix-ui/react-checkbox": "^1.1.5",
+    "@radix-ui/react-collapsible": "^1.1.4",
+    "@radix-ui/react-context-menu": "^2.2.7",
+    "@radix-ui/react-dialog": "^1.1.7",
+    "@radix-ui/react-dropdown-menu": "^2.1.7",
+    "@radix-ui/react-hover-card": "^1.1.7",
+    "@radix-ui/react-label": "^2.1.3",
+    "@radix-ui/react-menubar": "^1.1.7",
+    "@radix-ui/react-navigation-menu": "^1.2.6",
+    "@radix-ui/react-popover": "^1.1.7",
+    "@radix-ui/react-progress": "^1.1.7",
+    "@radix-ui/react-radio-group": "^1.2.4",
+    "@radix-ui/react-scroll-area": "^1.2.4",
+    "@radix-ui/react-select": "^2.1.7",
+    "@radix-ui/react-separator": "^1.1.3",
+    "@radix-ui/react-slider": "^1.2.4",
+    "@radix-ui/react-slot": "^1.2.0",
+    "@radix-ui/react-switch": "^1.1.4",
+    "@radix-ui/react-tabs": "^1.1.4",
+    "@radix-ui/react-toast": "^1.2.7",
+    "@radix-ui/react-toggle": "^1.1.3",
+    "@radix-ui/react-toggle-group": "^1.1.3",
+    "@radix-ui/react-tooltip": "^1.2.0",
+    "@sendgrid/mail": "^8.1.5",
+    "@stripe/react-stripe-js": "^3.7.0",
+    "@stripe/stripe-js": "^7.4.0",
+    "@tanstack/react-query": "^5.60.5",
+    "@types/bcrypt": "^5.0.2",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/memoizee": "^0.4.12",
+    "@types/nodemailer": "^6.4.17",
+    "@types/uuid": "^10.0.0",
+    "@vercel/node": "^5.3.5",
+    "@vercel/static-build": "^2.7.15",
+    "bcrypt": "^6.0.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "cmdk": "^1.1.1",
+    "connect-pg-simple": "^10.0.0",
+    "crypto": "^1.0.1",
+    "date-fns": "^3.6.0",
+    "drizzle-orm": "^0.39.1",
+    "drizzle-zod": "^0.7.0",
+    "embla-carousel-react": "^8.6.0",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "express-validator": "^7.2.1",
+    "framer-motion": "^11.13.1",
+    "input-otp": "^1.4.2",
+    "jsonwebtoken": "^9.0.2",
+    "lucide-react": "^0.453.0",
+    "memoizee": "^0.4.17",
+    "memorystore": "^1.6.7",
+    "next-themes": "^0.4.6",
+    "nodemailer": "^7.0.5",
+    "openid-client": "^6.6.2",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0",
+    "react": "^18.3.1",
+    "react-day-picker": "^8.10.1",
+    "react-dom": "^18.3.1",
+    "react-hook-form": "^7.55.0",
+    "react-icons": "^5.4.0",
+    "react-resizable-panels": "^2.1.7",
+    "recharts": "^2.15.2",
+    "stripe": "^18.3.0",
+    "tailwind-merge": "^2.6.0",
+    "tailwindcss-animate": "^1.0.7",
+    "tw-animate-css": "^1.2.5",
+    "uuid": "^11.1.0",
+    "vaul": "^1.1.2",
+    "wouter": "^3.3.5",
+    "ws": "^8.18.0",
+    "zod": "^3.24.2",
+    "zod-validation-error": "^3.4.0"
+  },
+  "devDependencies": {
+    "@replit/vite-plugin-cartographer": "^0.2.7",
+    "@replit/vite-plugin-runtime-error-modal": "^0.0.3",
+    "@tailwindcss/typography": "^0.5.15",
+    "@tailwindcss/vite": "^4.1.3",
+    "@types/connect-pg-simple": "^7.0.3",
+    "@types/express": "4.17.21",
+    "@types/express-session": "^1.18.0",
+    "@types/node": "20.16.11",
+    "@types/passport": "^1.0.16",
+    "@types/passport-local": "^1.0.38",
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.1",
+    "@types/ws": "^8.5.13",
+    "@vitejs/plugin-react": "^4.3.2",
+    "autoprefixer": "^10.4.20",
+    "drizzle-kit": "^0.30.4",
+    "esbuild": "^0.25.0",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.17",
+    "tsx": "^4.19.1",
+    "typescript": "5.6.3",
+    "vite": "^5.4.19"
+  },
+  "optionalDependencies": {
+    "bufferutil": "^4.0.8"
+  }
+}
+
+Final Output:
+
+Provide the full code for the client/package.json file and the main HTML file (e.g., client/index.html) containing the complete structure and JavaScript for the application.

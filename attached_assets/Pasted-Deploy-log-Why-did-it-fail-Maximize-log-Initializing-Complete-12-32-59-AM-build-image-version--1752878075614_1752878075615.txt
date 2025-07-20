@@ -1,0 +1,121 @@
+Deploy log
+Why did it fail?
+
+
+
+
+Maximize log
+Initializing
+Complete
+12:32:59 AM: build-image version: bbc21dac11d2294a9d0d8a7cf18850f179f7f76b (noble)
+12:32:59 AM: buildbot version: bbc21dac11d2294a9d0d8a7cf18850f179f7f76b
+12:32:59 AM: Fetching cached dependencies
+12:33:00 AM: Failed to fetch cache, continuing with build
+12:33:00 AM: Starting to prepare the repo for build
+12:33:00 AM: No cached dependencies found. Cloning fresh repo
+12:33:00 AM: git clone --filter=blob:none https://github.com/BRITANNIAFORGELTD/britannia-forge
+12:33:00 AM: Preparing Git Reference refs/heads/main
+12:33:01 AM: Custom publish path detected. Proceeding with the specified path: 'client/dist'
+12:33:01 AM: Custom functions path detected. Proceeding with the specified path: 'client/netlify/functions'
+12:33:02 AM: Starting to install dependencies
+12:33:02 AM: Using PHP version
+12:33:03 AM: Downloading and installing node v18.20.8...
+12:33:03 AM: Downloading https://nodejs.org/dist/v18.20.8/node-v18.20.8-linux-x64.tar.xz...
+12:33:03 AM: Computing checksum with sha256sum
+12:33:03 AM: Checksums matched!
+12:33:07 AM: Now using node v18.20.8 (npm v10.8.2)
+12:33:07 AM: Enabling Node.js Corepack
+12:33:07 AM: Started restoring cached build plugins
+12:33:07 AM: Finished restoring cached build plugins
+12:33:07 AM: Started restoring cached corepack dependencies
+12:33:07 AM: Finished restoring cached corepack dependencies
+12:33:07 AM: No npm workspaces detected
+12:33:07 AM: Started restoring cached node modules
+12:33:07 AM: Finished restoring cached node modules
+12:33:07 AM: Installing npm packages using npm version 10.8.2
+12:33:22 AM: added 259 packages in 15s
+12:33:22 AM: npm packages installed
+12:33:22 AM: Successfully installed dependencies
+12:33:22 AM: Starting build script
+12:33:23 AM: Detected 1 framework(s)
+12:33:23 AM: "vite" at version "5.4.19"
+12:33:23 AM: Section completed: initializing
+Building
+Failed
+12:33:24 AM: Netlify Build                                                 
+12:33:24 AM: ────────────────────────────────────────────────────────────────
+12:33:24 AM: ​
+12:33:24 AM: ❯ Version
+12:33:24 AM:   @netlify/build 34.2.5
+12:33:24 AM: ​
+12:33:24 AM: ❯ Flags
+12:33:24 AM:   accountId: 6879fd5291a98f14c32c500e
+12:33:24 AM:   baseRelDir: true
+12:33:24 AM:   buildId: 687acb9a93925190f23fd9ac
+12:33:24 AM:   deployId: 687acb9a93925190f23fd9ae
+12:33:25 AM: ​
+12:33:25 AM: ❯ Current directory
+12:33:25 AM:   /opt/build/repo/client
+12:33:25 AM: ​
+12:33:25 AM: ❯ Config file
+12:33:25 AM:   /opt/build/repo/netlify.toml
+12:33:25 AM: ​
+12:33:25 AM: ❯ Context
+12:33:25 AM:   production
+12:33:25 AM: ​
+12:33:25 AM: build.command from netlify.toml                               
+12:33:25 AM: ────────────────────────────────────────────────────────────────
+12:33:25 AM: ​
+12:33:25 AM: $ npm run build
+12:33:25 AM: > britannia-forge-client@0.0.0 build
+12:33:25 AM: > npx vite build
+12:33:25 AM: vite v5.4.19 building for production...
+12:33:25 AM: transforming...
+12:33:26 AM: warn - The `content` option in your Tailwind CSS configuration is missing or empty.
+12:33:26 AM: warn - Configure your content sources or your generated CSS will be missing styles.
+12:33:26 AM: warn - https://tailwindcss.com/docs/content-configuration
+12:33:27 AM: Failed during stage 'building site': Build script returned non-zero exit code: 2 (https://ntl.fyi/exit-code-2)
+12:33:27 AM: ✓ 1390 modules transformed.
+12:33:27 AM: x Build failed in 1.39s
+12:33:27 AM: error during build:
+12:33:27 AM: [vite]: Rollup failed to resolve import "react-icons/fa" from "/opt/build/repo/client/src/components/navigation/footer.tsx".
+12:33:27 AM: This is most likely unintended because it can break your application at runtime.
+12:33:27 AM: If you do want to externalize this module explicitly add it to
+12:33:27 AM: `build.rollupOptions.external`
+12:33:27 AM:     at viteWarn (file:///opt/build/repo/client/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:65839:17)
+12:33:27 AM:     at onwarn (file:///opt/build/repo/client/node_modules/@vitejs/plugin-react/dist/index.js:90:7)
+12:33:27 AM:     at onRollupWarning (file:///opt/build/repo/client/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:65869:5)
+12:33:27 AM:     at onwarn (file:///opt/build/repo/client/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:65534:7)
+12:33:27 AM:     at file:///opt/build/repo/client/node_modules/rollup/dist/es/shared/node-entry.js:20832:13
+12:33:27 AM:     at Object.logger [as onLog] (file:///opt/build/repo/client/node_modules/rollup/dist/es/shared/node-entry.js:22698:9)
+12:33:27 AM:     at ModuleLoader.handleInvalidResolvedId (file:///opt/build/repo/client/node_modules/rollup/dist/es/shared/node-entry.js:21444:26)
+12:33:27 AM:     at file:///opt/build/repo/client/node_modules/rollup/dist/es/shared/node-entry.js:21402:26
+12:33:27 AM: ​
+12:33:27 AM: "build.command" failed                                        
+12:33:27 AM: ────────────────────────────────────────────────────────────────
+12:33:27 AM: ​
+12:33:27 AM:   Error message
+12:33:27 AM:   Command failed with exit code 1: npm run build (https://ntl.fyi/exit-code-1)
+12:33:27 AM: ​
+12:33:27 AM:   Error location
+12:33:27 AM:   In build.command from netlify.toml:
+12:33:27 AM:   npm run build
+12:33:27 AM: ​
+12:33:27 AM:   Resolved config
+12:33:27 AM:   build:
+12:33:27 AM:     base: /opt/build/repo/client
+12:33:27 AM:     command: npm run build
+12:33:27 AM:     commandOrigin: config
+12:33:27 AM:     environment:
+12:33:27 AM:       - NODE_VERSION
+12:33:27 AM:     publish: /opt/build/repo/client/dist
+12:33:27 AM:     publishOrigin: config
+12:33:27 AM:   functionsDirectory: /opt/build/repo/client/netlify/functions
+12:33:27 AM: Build failed due to a user error: Build script returned non-zero exit code: 2
+12:33:27 AM: Failing build: Failed to build site
+12:33:27 AM: Finished processing build request in 28.124s
+Deploying
+Skipped
+Cleanup
+Skipped
+Post-processing

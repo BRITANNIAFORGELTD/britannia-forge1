@@ -1,0 +1,45 @@
+job_type,tier,city,price
+Annual Boiler Service,Standard,London,10000
+Annual Boiler Service,Standard,UK Average,8500
+Back Boiler to Combi Conversion,Premium,London,350000
+Back Boiler to Combi Conversion,Standard,UK Average,300000
+Central Heating Powerflush (up to 8 radiators),Standard,London,50000
+Central Heating Powerflush (up to 8 radiators),Standard,UK Average,40000
+Combi Boiler Replacement (like-for-like),Budget,Bristol,92500
+Combi Boiler Replacement (like-for-like),Standard,Bristol,107500
+Combi Boiler Replacement (like-for-like),Premium,Bristol,127500
+Combi Boiler Replacement (like-for-like),Standard,London (Outer),120000
+Combi Boiler Replacement (like-for-like),Budget,Manchester,95000
+Combi Boiler Replacement (like-for-like),Standard,London (Central),135000
+Combi Boiler Replacement (like-for-like),Premium,London (Central),160000
+Combi Boiler Replacement (like-for-like),Premium,London (Outer),140000
+Combi Boiler Replacement (like-for-like),Standard,Manchester,110000
+Combi Boiler Replacement (like-for-like),Premium,Manchester,130000
+Combi Boiler Replacement (like-for-like),Budget,Birmingham,90000
+Combi Boiler Replacement (like-for-like),Standard,Birmingham,105000
+Combi Boiler Replacement (like-for-like),Premium,Birmingham,125000
+Combi to System Conversion,Premium,London,230000
+Combi to System Conversion,Standard,UK Average,190000
+Conventional Boiler Replacement (like-for-like),Standard,UK Average,120000
+Conventional Boiler Replacement (like-for-like),Premium,London,150000
+Conventional to Combi Conversion,Standard,UK Average,200000
+Conventional to Combi Conversion,Premium,London,250000
+Heating Engineer Day Rate,Standard,London,45000
+Heating Engineer Day Rate,Standard,UK Average,35000
+New Hot Water Cylinder Installation,Standard,UK Average,75000
+New Hot Water Cylinder Installation,Premium,London,95000
+System Boiler Replacement (like-for-like),Standard,London (Outer),125000
+System Boiler Replacement (like-for-like),Premium,Manchester,135000
+System Boiler Replacement (like-for-like),Standard,Manchester,115000
+System Boiler Replacement (like-for-like),Budget,Manchester,100000
+System Boiler Replacement (like-for-like),Premium,London (Central),165000
+System Boiler Replacement (like-for-like),Standard,London (Central),140000
+System Boiler Replacement (like-for-like),Premium,London (Outer),145000
+System to Combi Conversion,Standard,London (Outer),180000
+System to Combi Conversion,Standard,London (Central),200000
+System to Combi Conversion,Premium,London (Central),240000
+System to Combi Conversion,Premium,Birmingham,175000
+System to Combi Conversion,Standard,Birmingham,145000
+System to Combi Conversion,Premium,Manchester,180000
+System to Combi Conversion,Standard,Manchester,150000
+System to Combi Conversion,Premium,London (Outer),210000

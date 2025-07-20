@@ -1,0 +1,88 @@
+Deploy log
+Why did it fail?
+
+
+
+
+Maximize log
+Initializing
+Complete
+Building
+Failed
+12:25:31 AM: Failed during stage 'building site': Build script returned non-zero exit code: 2 (https://ntl.fyi/exit-code-2)
+12:25:27 AM: Netlify Build                                                 
+12:25:27 AM: ────────────────────────────────────────────────────────────────
+12:25:27 AM: ​
+12:25:27 AM: ❯ Version
+12:25:27 AM:   @netlify/build 34.2.5
+12:25:27 AM: ​
+12:25:27 AM: ❯ Flags
+12:25:27 AM:   accountId: 6879fd5291a98f14c32c500e
+12:25:27 AM:   baseRelDir: true
+12:25:27 AM:   buildId: 687ac9ab9392518be93fda40
+12:25:27 AM:   deployId: 687ac9ab9392518be93fda42
+12:25:27 AM: ​
+12:25:27 AM: ❯ Current directory
+12:25:27 AM:   /opt/build/repo/client
+12:25:27 AM: ​
+12:25:27 AM: ❯ Config file
+12:25:27 AM:   /opt/build/repo/netlify.toml
+12:25:27 AM: ​
+12:25:27 AM: ❯ Context
+12:25:27 AM:   production
+12:25:27 AM: ​
+12:25:27 AM: build.command from netlify.toml                               
+12:25:27 AM: ────────────────────────────────────────────────────────────────
+12:25:27 AM: ​
+12:25:27 AM: $ npm run build
+12:25:27 AM: > britannia-forge-client@0.0.0 build
+12:25:27 AM: > npx vite build
+12:25:29 AM: vite v5.4.19 building for production...
+12:25:29 AM: transforming...
+12:25:29 AM: warn - The `content` option in your Tailwind CSS configuration is missing or empty.
+12:25:29 AM: warn - Configure your content sources or your generated CSS will be missing styles.
+12:25:29 AM: warn - https://tailwindcss.com/docs/content-configuration
+12:25:30 AM: ✓ 1107 modules transformed.
+12:25:30 AM: x Build failed in 1.50s
+12:25:30 AM: error during build:
+12:25:30 AM: [vite]: Rollup failed to resolve import "@stripe/react-stripe-js" from "/opt/build/repo/client/src/pages/checkout.tsx".
+12:25:30 AM: This is most likely unintended because it can break your application at runtime.
+12:25:30 AM: If you do want to externalize this module explicitly add it to
+12:25:30 AM: `build.rollupOptions.external`
+12:25:30 AM:     at viteWarn (file:///opt/build/repo/client/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:65839:17)
+12:25:30 AM:     at onwarn (file:///opt/build/repo/client/node_modules/@vitejs/plugin-react/dist/index.js:90:7)
+12:25:30 AM:     at onRollupWarning (file:///opt/build/repo/client/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:65869:5)
+12:25:30 AM:     at onwarn (file:///opt/build/repo/client/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:65534:7)
+12:25:30 AM:     at file:///opt/build/repo/client/node_modules/rollup/dist/es/shared/node-entry.js:20832:13
+12:25:30 AM:     at Object.logger [as onLog] (file:///opt/build/repo/client/node_modules/rollup/dist/es/shared/node-entry.js:22698:9)
+12:25:30 AM:     at ModuleLoader.handleInvalidResolvedId (file:///opt/build/repo/client/node_modules/rollup/dist/es/shared/node-entry.js:21444:26)
+12:25:30 AM:     at file:///opt/build/repo/client/node_modules/rollup/dist/es/shared/node-entry.js:21402:26
+12:25:31 AM: ​
+12:25:31 AM: "build.command" failed                                        
+12:25:31 AM: ────────────────────────────────────────────────────────────────
+12:25:31 AM: ​
+12:25:31 AM:   Error message
+12:25:31 AM:   Command failed with exit code 1: npm run build (https://ntl.fyi/exit-code-1)
+12:25:31 AM: ​
+12:25:31 AM:   Error location
+12:25:31 AM:   In build.command from netlify.toml:
+12:25:31 AM:   npm run build
+12:25:31 AM: ​
+12:25:31 AM:   Resolved config
+12:25:31 AM:   build:
+12:25:31 AM:     base: /opt/build/repo/client
+12:25:31 AM:     command: npm run build
+12:25:31 AM:     commandOrigin: config
+12:25:31 AM:     environment:
+12:25:31 AM:       - NODE_VERSION
+12:25:31 AM:     publish: /opt/build/repo/client/dist
+12:25:31 AM:     publishOrigin: config
+12:25:31 AM:   functionsDirectory: /opt/build/repo/client/netlify/functions
+12:25:31 AM: Build failed due to a user error: Build script returned non-zero exit code: 2
+12:25:31 AM: Failing build: Failed to build site
+12:25:31 AM: Finished processing build request in 31.273s
+Deploying
+Skipped
+Cleanup
+Skipped
+Post-processing

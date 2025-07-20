@@ -1,0 +1,72 @@
+
+Building
+Failed
+6:10:24 PM: Failed during stage 'building site': Build script returned non-zero exit code: 2 (https://ntl.fyi/exit-code-2)
+6:10:22 PM: Netlify Build                                                 
+6:10:22 PM: ────────────────────────────────────────────────────────────────
+6:10:22 PM: ​
+6:10:22 PM: ❯ Version
+6:10:22 PM:   @netlify/build 34.2.5
+6:10:22 PM: ​
+6:10:22 PM: ❯ Flags
+6:10:22 PM:   accountId: 6879fd5291a98f14c32c500e
+6:10:22 PM:   baseRelDir: true
+6:10:22 PM:   buildId: 687a7182b45c51c2d9e9abf5
+6:10:22 PM:   deployId: 687a7182b45c51c2d9e9abf7
+6:10:22 PM: ​
+6:10:22 PM: ❯ Current directory
+6:10:22 PM:   /opt/build/repo/client
+6:10:22 PM: ​
+6:10:22 PM: ❯ Config file
+6:10:22 PM:   /opt/build/repo/netlify.toml
+6:10:22 PM: ​
+6:10:22 PM: ❯ Context
+6:10:22 PM:   production
+6:10:22 PM: ​
+6:10:22 PM: build.command from netlify.toml                               
+6:10:22 PM: ────────────────────────────────────────────────────────────────
+6:10:22 PM: ​
+6:10:22 PM: $ npm run build
+6:10:22 PM: > britannia-forge-client@0.0.0 build
+6:10:22 PM: > npx vite build
+6:10:22 PM: vite v5.4.19 building for production...
+6:10:22 PM: transforming...
+6:10:23 PM: ✓ 129 modules transformed.
+6:10:23 PM: x Build failed in 659ms
+6:10:23 PM: error during build:
+6:10:23 PM: [vite]: Rollup failed to resolve import "@assets/logo_1752637323721.png" from "/opt/build/repo/client/src/pages/about.tsx".
+6:10:23 PM: This is most likely unintended because it can break your application at runtime.
+6:10:23 PM: If you do want to externalize this module explicitly add it to
+6:10:23 PM: `build.rollupOptions.external`
+6:10:23 PM:     at viteWarn (file:///opt/build/repo/client/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:65839:17)
+6:10:23 PM:     at onwarn (file:///opt/build/repo/client/node_modules/@vitejs/plugin-react/dist/index.js:90:7)
+6:10:23 PM:     at onRollupWarning (file:///opt/build/repo/client/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:65869:5)
+6:10:23 PM:     at onwarn (file:///opt/build/repo/client/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:65534:7)
+6:10:23 PM:     at file:///opt/build/repo/client/node_modules/rollup/dist/es/shared/node-entry.js:20832:13
+6:10:23 PM:     at Object.logger [as onLog] (file:///opt/build/repo/client/node_modules/rollup/dist/es/shared/node-entry.js:22698:9)
+6:10:23 PM:     at ModuleLoader.handleInvalidResolvedId (file:///opt/build/repo/client/node_modules/rollup/dist/es/shared/node-entry.js:21444:26)
+6:10:23 PM:     at file:///opt/build/repo/client/node_modules/rollup/dist/es/shared/node-entry.js:21402:26
+6:10:23 PM: ​
+6:10:23 PM: "build.command" failed                                        
+6:10:23 PM: ────────────────────────────────────────────────────────────────
+6:10:23 PM: ​
+6:10:23 PM:   Error message
+6:10:23 PM:   Command failed with exit code 1: npm run build (https://ntl.fyi/exit-code-1)
+6:10:23 PM: ​
+6:10:23 PM:   Error location
+6:10:23 PM:   In build.command from netlify.toml:
+6:10:23 PM:   npm run build
+6:10:23 PM: ​
+6:10:23 PM:   Resolved config
+6:10:23 PM:   build:
+6:10:23 PM:     base: /opt/build/repo/client
+6:10:23 PM:     command: npm run build
+6:10:23 PM:     commandOrigin: config
+6:10:23 PM:     environment:
+6:10:23 PM:       - NODE_VERSION
+6:10:23 PM:     publish: /opt/build/repo/client/dist
+6:10:23 PM:     publishOrigin: config
+6:10:23 PM:   functionsDirectory: /opt/build/repo/client/netlify/functions
+6:10:24 PM: Build failed due to a user error: Build script returned non-zero exit code: 2
+6:10:24 PM: Failing build: Failed to build site
+6:10:24 PM: Finished processing build request in 28.869s

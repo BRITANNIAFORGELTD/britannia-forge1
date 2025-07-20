@@ -1,0 +1,44 @@
+Prompt for AI Code Generator: Professional Consultation on Vercel Monorepo Deployment Failure
+Objective:
+
+This is a formal request for a professional consultation. We require your expert analysis and a detailed solution for a persistent deployment failure on the Vercel platform. Our goal is to deploy our existing, high-quality application without compromising its architecture.
+
+1. Current Project Architecture & Status
+We have a sophisticated web application for "Britannia Forge" with the following structure, managed in a GitHub repository:
+
+Monorepo Structure: The project is organized into a "monorepo" with distinct folders for the frontend and backend:
+
+client/: Contains the entire frontend application, built with React and Vite.
+
+server/: Contains the backend API, built with Express.js.
+
+Configuration Files: The project currently has a single, comprehensive package.json and package-lock.json located in the root directory. These files contain all dependencies for both the client and server.
+
+Code Quality: The existing codebase is professionally written and includes a full authentication system, database integration, and an advanced quote engine. Our goal is to deploy this application, not replace it with a simpler version.
+
+2. The Deployment Environment & The Problem
+We are using a standard, professional deployment pipeline: GitHub -> Vercel.
+
+Vercel Project Configuration: The Vercel project is configured as follows to target our frontend application:
+
+Framework Preset: Vite
+
+Root Directory: client
+
+The Persistent Error: Despite having the correct settings, every deployment fails with the exact same error message in the build logs:
+
+sh: line 1: vite: command not found
+Error: Command "vite build" exited with 127
+
+3. The Request for Consultation
+We have confirmed that our Vercel settings appear correct and that our GitHub repository contains all the necessary code. The issue seems to be a fundamental conflict between our project's monorepo structure and Vercel's build process.
+
+We require your professional analysis and a recommended solution. Please address the following points:
+
+Root Cause Analysis: Based on the provided architecture and the Vercel error message, what is your professional diagnosis of the root cause of the vite: command not found error?
+
+Proposed Solution: What is the standard, professional industry solution for correctly deploying a monorepo with a separate frontend application (like our client folder) on Vercel?
+
+Implementation Plan: Please provide a clear, step-by-step plan detailing the exact file modifications and/or additions required to fix this issue. This should include the precise contents of any new files needed (e.g., a package.json for the client) and any necessary adjustments to the root package.json.
+
+Our priority is to maintain the high quality of our existing application. We need a solution that is robust, scalable, and follows best practices for modern web development.

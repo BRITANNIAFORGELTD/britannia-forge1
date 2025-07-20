@@ -1,0 +1,129 @@
+Prompt for AI Code Generator: Definitive Overhaul of the Intelligent Quote Engine
+Objective:
+
+This is a formal directive to execute a complete overhaul of the "Boiler Quote" application. The current prototype has significant logical flaws and UI/UX issues. Your task is to refactor and enhance the entire multi-step wizard to create a truly intelligent, professional, and mobile-first quotation system. This will be a multi-phase process.
+
+Phase 1: Refactor Step 1 (Property Details) & Core Logic
+Task: Rebuild the first step of the survey to be more intelligent and professional, and update the core calculation engine based on the provided "Pricing Bible" PDF.
+
+1.1: UI & Layout Enhancements:
+
+Mobile-First Design: Ensure all elements on this step are perfectly mobile-friendly. The layout must be clean and never require horizontal scrolling.
+
+Postcode Position: The "Postcode" field must be the first question at the top of the form. This is standard practice for location-based services.
+
+Redundant Questions: The two checkboxes at the bottom ("Drain nearby for condensate" and "Need to move boiler location") must be completely removed. These questions will be handled intelligently in later steps.
+
+1.2: Intelligent Question Refactoring:
+
+"Drain Nearby" Question: This question must be rephrased for clarity and accuracy.
+
+New Question: "Is there a suitable drain (e.g., sink waste pipe) within 3 meters of the boiler's current location?"
+
+New Options: Professional, elegant buttons for "Yes" and "No".
+
+New Logic: If the user selects "No", the system must automatically add the cost of a condensate pump to the quote. If the user selects "Yes", the system should prompt for a photo of the boiler and the nearby drain in the photo upload step.
+
+"Move Boiler" Question:
+
+New Question: "Are you planning to move your boiler to a new location?"
+
+New Options: Professional buttons for "Yes" and "No".
+
+New Logic: If the user selects "Yes", the system must:
+
+Automatically add a provisional sum (e.g., £800) to the quote for the relocation.
+
+Display a clear, friendly message: "Boiler relocations require a detailed assessment. A provisional cost has been added and will be finalized during a brief video call with our technical expert."
+
+Flag this quote internally as requiring a mandatory video call.
+
+1.3: Core Calculation Engine Upgrade:
+
+Implement the "Pricing Bible": The JavaScript logic must be rewritten to use the data and rules from the provided PDF document.
+
+Intelligent Boiler Sizing: The engine must accurately calculate the property's heat load and hot water demand based on the number of bedrooms, bathrooms, and occupants.
+
+System vs. Combi Logic:
+
+If a user enters a combination of property details that makes a combi boiler professionally unsound (e.g., 4+ bedrooms, 4+ bathrooms), the engine must override the user's selection.
+
+When the user reaches the quote selection page, it must display a clear message: "For a property of this size, a System Boiler is required to meet your hot water demand. We have provided quotes for suitable systems."
+
+The engine must then present quotes for correctly sized System Boilers and unvented cylinders.
+
+Postcode-Based Pricing: The engine must be architected to adjust labour costs based on the user's postcode, referencing the geographical pricing data in the "Pricing Bible".
+
+Phase 2: Overhaul Step 2 (Photo Uploads)
+Task: Rebuild the photo upload page to be more professional, user-friendly, and informative.
+
+2.1: UI & UX Enhancements:
+
+Mobile-First Design: The page must be perfectly responsive and easy to use on a mobile device.
+
+Dual Upload Options: For every required photo, there must be two clear, distinct buttons: "Take Photo" (which opens the device camera) and "Upload File".
+
+Photo Management: The user must be able to see a clear preview of each uploaded photo, with an obvious "Delete" or "Replace" button.
+
+Visual Guides: Each photo uploader must include a simple, clear icon or sample image that visually demonstrates the required shot (e.g., a diagram showing a boiler with a 60cm radius, a diagram of a flue exiting a roof).
+
+2.2: Logic & Validation:
+
+File Type Restriction: The uploaders must be configured to only accept common image file types (.jpg, .jpeg, .png, .heic).
+
+Conditional Photos: The system should intelligently ask for specific photos based on previous answers (e.g., if the user has a System Boiler, it must prompt for a photo of the hot water cylinder).
+
+Phase 3: Re-architect the Final Steps (Quote, Booking & Payment)
+Task: Re-organize and redesign the final steps of the funnel to create a logical, transparent, and trustworthy customer journey.
+
+3.1: Page Order Correction:
+
+The current "Step 4 - Customer Details" and "Step 5 - Payment & Booking" must be swapped. The user must see the final, detailed quote before being asked for their personal information.
+
+3.2: Quote Presentation Page (New Step 4):
+
+Full Price Breakdown: This page must display a comprehensive, itemized breakdown of the final quote, including:
+
+The cost of the selected boiler package.
+
+The cost of any mandatory items (e.g., magnetic filter).
+
+The cost of any optional upgrades selected (e.g., a smart thermostat).
+
+Any additional costs calculated by the engine (e.g., condensate pump, flue extensions, high-floor access fee).
+
+A clear subtotal, the VAT amount, and the final, total price.
+
+Payment Options: Clearly present the different payment plans:
+
+Staged Payment: "Pay £100 Deposit Now". This section must also clearly state the amounts and due dates for the subsequent payments (e.g., "Materials Payment: £1500 due upon booking confirmation," "Final Balance: £600 due upon completion").
+
+Pay in Full.
+
+12-Month Interest-Free Finance.
+
+Included Items: Clearly list all items that are included as standard (e.g., "Standard Wireless Thermostat," "System Power-Flush").
+
+3.3: Booking & Payment Page (New Step 5):
+
+Date Selection: The user must be able to select one mandatory and up to two optional installation dates.
+
+Customer Details: The form for Name, Email, Phone, and Address must be on this page.
+
+Input Validation: The postcode must be validated as a correct UK format. The phone number must be validated to ensure it is a plausible length and contains only numbers.
+
+Email Verification: Before the payment can be processed, the user's email must be verified. The system should send a 6-digit code to their email, and they must enter it on this page to proceed.
+
+Terms & Conditions: A mandatory checkbox must be present, confirming the user agrees to the terms, including the non-refundable nature of the deposit if they are not available for the appointment.
+
+3.4: Confirmation & Dashboard (Step 6 & Beyond):
+
+Booking Confirmed Page: This page must be professionally designed, showing a summary of the booking, and clearly outlining the "What's Next" steps (e.g., "Survey Scheduled," "Final Quote," "Installation").
+
+Create Account: This page must have a simple form for the user to create a password to turn their booking into a full customer account.
+
+Customer Dashboard: The dashboard must show the installation progress, the assigned engineer's details (once available), and clear prompts for upcoming actions, such as making the "Materials Payment." It must also include a "Rate Your Experience" or "Leave Review" feature.
+
+Final Output:
+
+Provide a series of code updates, file by file, to implement this comprehensive overhaul. Each response should clearly state which file is being modified and provide the complete, updated code for that file.

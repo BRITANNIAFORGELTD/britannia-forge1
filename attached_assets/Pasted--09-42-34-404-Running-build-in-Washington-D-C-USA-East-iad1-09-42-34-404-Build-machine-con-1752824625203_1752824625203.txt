@@ -1,0 +1,35 @@
+[09:42:34.404] Running build in Washington, D.C., USA (East) – iad1
+[09:42:34.404] Build machine configuration: 4 cores, 8 GB
+[09:42:34.418] Cloning github.com/BRITANNIAFORGELTD/britannia-forge (Branch: main, Commit: 67993e9)
+[09:42:34.442] Skipping build cache, deployment was triggered without cache.
+[09:42:34.743] Cloning completed: 324.000ms
+[09:42:37.337] Running "vercel build"
+[09:42:38.160] Vercel CLI 44.4.3
+[09:42:39.076] Installing dependencies...
+[09:42:43.531] npm warn deprecated crypto@1.0.1: This package is no longer supported. It's now a built-in Node module. If you've depended on crypto, you should switch to the one that's built-in.
+[09:42:44.619] npm warn deprecated @esbuild-kit/esm-loader@2.6.5: Merged into tsx: https://tsx.is
+[09:42:44.619] npm warn deprecated @esbuild-kit/core-utils@3.3.2: Merged into tsx: https://tsx.is
+[09:42:50.751] 
+[09:42:50.751] added 642 packages in 11s
+[09:42:50.751] 
+[09:42:50.751] 75 packages are looking for funding
+[09:42:50.751]   run `npm fund` for details
+[09:42:51.565] [36mvite v5.4.19 [32mbuilding for production...[36m[39m
+[09:42:51.619] transforming...
+[09:42:51.889] [32m✓[39m 4 modules transformed.
+[09:42:51.894] [31mx[39m Build failed in 303ms
+[09:42:51.894] [31merror during build:
+[09:42:51.894] [31m[vite]: Rollup failed to resolve import "@/components/ui/toaster" from "/vercel/path0/client/src/App.tsx".
+[09:42:51.895] This is most likely unintended because it can break your application at runtime.
+[09:42:51.895] If you do want to externalize this module explicitly add it to
+[09:42:51.895] `build.rollupOptions.external`[31m
+[09:42:51.895]     at viteWarn (file:///vercel/path0/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:65839:17)
+[09:42:51.895]     at onRollupWarning (file:///vercel/path0/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:65871:5)
+[09:42:51.895]     at onwarn (file:///vercel/path0/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:65534:7)
+[09:42:51.895]     at file:///vercel/path0/node_modules/rollup/dist/es/shared/node-entry.js:19452:13
+[09:42:51.895]     at Object.logger [as onLog] (file:///vercel/path0/node_modules/rollup/dist/es/shared/node-entry.js:21178:9)
+[09:42:51.895]     at ModuleLoader.handleInvalidResolvedId (file:///vercel/path0/node_modules/rollup/dist/es/shared/node-entry.js:20067:26)
+[09:42:51.896]     at file:///vercel/path0/node_modules/rollup/dist/es/shared/node-entry.js:20025:26[39m
+[09:42:51.913] Error: Command "cd client && npx vite build" exited with 1
+[09:42:52.147] 
+[09:42:55.040] Exiting build container

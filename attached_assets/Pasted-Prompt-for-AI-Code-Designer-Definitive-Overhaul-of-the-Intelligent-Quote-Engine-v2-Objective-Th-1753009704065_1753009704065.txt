@@ -1,0 +1,90 @@
+Prompt for AI Code Designer: Definitive Overhaul of the Intelligent Quote Engine (v2)
+Objective:
+
+This is a formal directive to execute a complete overhaul of the "Boiler Quote" application. The current version is a good prototype, but it must be elevated to a truly "genius" level of intelligence and professionalism. This will be a multi-phase process. First, you will rebuild the core logic engine (intelligent-quote-engine.ts) to be deeply integrated with our real-world data and expert rules. Second, you will refactor the React UI components to implement a superior user experience and accurately reflect the engine's complex calculations.
+
+Phase 1: Architect and Rebuild the "Intelligent Quote Engine"
+Task: Re-architect the client/src/lib/intelligent-quote-engine.ts module. It must become the single source of truth for all calculations, recommendations, and pricing.
+
+1.1: Data Integration:
+
+Action: The engine must be refacted to consume and process data from the provided CSV files (Boilers_rows.csv, Labour_Costs_rows.csv, Sundries_rows.csv, Boiler_Conversion_Scenarios.csv). This data will replace any hardcoded PRICING_BIBLE. The engine should be structured as if it were fetching this data from a live admin database.
+
+1.2: Enhance Core Calculation Logic:
+
+determineOptimalBoilerType Function: This is the most critical logic. It must be enhanced to:
+
+Prioritize user preference for "like-for-like" swaps (e.g., if they have a combi and a combi is viable).
+
+Use a demandScore (based on bathrooms and occupants) to identify the "Combi Tipping Point."
+
+Crucial Rule: If the demandScore is too high for a combi boiler to be a professionally sound recommendation (e.g., >2 bathrooms and >4 occupants), the function must override the user's preference and return "System Boiler." It should also generate a clear explanatory message to be displayed to the user later.
+
+calculateOptimalBoilerSize Function: This function must cross-reference the calculated heat load with the Boiler_Conversion_Scenarios.csv and the Boilers_rows.csv to select not just a kW size, but specific boiler models for each tier (Budget, Mid-Range, Premium).
+
+calculateCylinderCapacity Function: If a System boiler is required, this function must use the rules from the "Pricing Bible" PDF (Table 5) to recommend the correct unvented cylinder size (e.g., 210L, 250L, 300L+).
+
+1.3: Implement Comprehensive Pricing Logic:
+
+The main calculateIntelligentQuote function must be rebuilt to assemble the final price by sourcing all costs from the provided data files:
+
+Labour Costs: Must be selected from Labour_Costs_rows.csv based on both the Job Type (e.g., "Combi Boiler Replacement" vs. "Conventional to Combi Conversion") and the Postcode Area (e.g., "London (Central)" vs. "London (Outer)").
+
+Conversion Costs: When converting from a Regular or System boiler, the engine must automatically add a "Decommissioning & Removal" charge (e.g., £800, sourced from an admin price list).
+
+Additional Costs: The engine must automatically add costs for:
+
+Flue Extensions: Add £80 for each 1-meter extension selected.
+
+Condensate Pump: Add the price from the sundries list if the user answers "No" to the drain question.
+
+Fused Spur: Add £150 for a "New Fused Spur Installation" if the user answers "No" to the fused switch question.
+
+Parking: If "Paid Parking" is selected, do not add a cost, but generate a note for the invoice: "Parking costs are not included and are to be settled directly with the engineer."
+
+Phase 2: Rebuild the React UI Components
+Task: Refactor the QuoteWizard.tsx and its sub-components to be more professional, user-friendly, and to accurately reflect the new engine's logic.
+
+2.1: Refactor Step 1 (Property Details):
+
+Add Fused Switch Question: Add a mandatory question: "Is there a 3-amp fused switch next to the boiler's current location?" with "Yes" / "No" options.
+
+2.2: Overhaul Photo Uploads Step:
+
+Add Mandatory Photos: Add new mandatory uploaders for the Main Electrical Meter and the Main Water Stopcock.
+
+Increase Optional Photos: Increase the number of optional photo uploaders to four.
+
+Improve Labels: Change the "Pipework & Connections" label to be clearer, e.g., "Pipework Beneath Boiler".
+
+2.3: Re-architect the Final Steps (Quote, Booking & Payment):
+
+Quote Presentation Page:
+
+Recommendation Text: Ensure the recommendation text at the top explicitly includes the number of occupants as a key factor in the decision.
+
+Thermostat Upgrades: This section must be present. It should show the "Standard Wireless" thermostat as included (£0) and then offer 2-3 upgrade options (e.g., "Hive Smart Thermostat") with the additional cost clearly displayed.
+
+Booking & Payment Page:
+
+Date/Time Selection: The UI must be redesigned to be clear and not overlap. It must disable past dates. The user must be able to select one required date and up to two optional dates, each with a choice of time slot (e.g., "Morning (8am-12pm)", "Afternoon (12pm-5pm)").
+
+Payment Options: This section must be completely redesigned to be professional and clear, offering three distinct choices:
+
+Staged Payments: Clearly shows "Pay £100 Deposit Now," and explains that the Materials and Final Balance payments will be due later.
+
+Pay in Full.
+
+12-Month Interest-Free Finance.
+
+Validation & Error Messages: All form validation messages must be highly visible (e.g., red text, clear placement next to the field) and not transparent or hidden at the bottom of the page.
+
+2.4: PDF Generation & Customer Dashboard:
+
+PDF Invoice: The system must be able to generate a downloadable PDF of the final quote, which includes every selection the user made, the full itemized price breakdown, and the recommendation text.
+
+Customer Dashboard: The dashboard must be enhanced to show a clear timeline of the installation, prompts for next payments, and details of the assigned engineer.
+
+Final Output:
+
+Provide the code in two distinct phases. First, deliver the complete, refactored code for the intelligent-quote-engine.ts module. Once approved, proceed to deliver the updated code for the React UI components (QuoteWizard.tsx, etc.).

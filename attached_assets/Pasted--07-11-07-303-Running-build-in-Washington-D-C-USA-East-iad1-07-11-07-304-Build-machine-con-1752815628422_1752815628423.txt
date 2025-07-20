@@ -1,0 +1,57 @@
+[07:11:07.303] Running build in Washington, D.C., USA (East) – iad1
+[07:11:07.304] Build machine configuration: 4 cores, 8 GB
+[07:11:07.316] Cloning github.com/BRITANNIAFORGELTD/britannia-forge (Branch: main, Commit: 138cc9e)
+[07:11:07.323] Skipping build cache, deployment was triggered without cache.
+[07:11:07.570] Cloning completed: 254.000ms
+[07:11:09.397] Running "vercel build"
+[07:11:09.875] Vercel CLI 44.4.3
+[07:11:10.583] Running "install" command: `npm install`...
+[07:11:14.467] npm warn deprecated crypto@1.0.1: This package is no longer supported. It's now a built-in Node module. If you've depended on crypto, you should switch to the one that's built-in.
+[07:11:15.520] npm warn deprecated @esbuild-kit/core-utils@3.3.2: Merged into tsx: https://tsx.is
+[07:11:15.541] npm warn deprecated @esbuild-kit/esm-loader@2.6.5: Merged into tsx: https://tsx.is
+[07:11:21.875] 
+[07:11:21.875] added 642 packages, and audited 643 packages in 11s
+[07:11:21.876] 
+[07:11:21.876] 75 packages are looking for funding
+[07:11:21.876]   run `npm fund` for details
+[07:11:21.908] 
+[07:11:21.908] 16 vulnerabilities (3 low, 11 moderate, 2 high)
+[07:11:21.908] 
+[07:11:21.908] To address issues that do not require attention, run:
+[07:11:21.909]   npm audit fix
+[07:11:21.909] 
+[07:11:21.909] To address all issues (including breaking changes), run:
+[07:11:21.909]   npm audit fix --force
+[07:11:21.909] 
+[07:11:21.909] Run `npm audit` for details.
+[07:11:22.305] [36mvite v5.4.19 [32mbuilding for production...[36m[39m
+[07:11:22.357] transforming...
+[07:11:22.680] Browserslist: browsers data (caniuse-lite) is 9 months old. Please run:
+[07:11:22.680]   npx update-browserslist-db@latest
+[07:11:22.680]   Why you should do it regularly: https://github.com/browserslist/update-db#readme
+[07:11:27.938] [32m✓[39m 1818 modules transformed.
+[07:11:28.463] rendering chunks...
+[07:11:28.475] computing gzip size...
+[07:11:28.499] [2m../dist/public/[22m[32mindex.html                              [39m[1m[2m  1.12 kB[22m[1m[22m[2m │ gzip:   0.60 kB[22m
+[07:11:28.499] [2m../dist/public/[22m[2massets/[22m[32mlogo_1752637323721-JhUfFXio.png  [39m[1m[2m117.08 kB[22m[1m[22m
+[07:11:28.499] [2m../dist/public/[22m[2massets/[22m[35mindex-CD0XMFtS.css               [39m[1m[2m117.11 kB[22m[1m[22m[2m │ gzip:  18.93 kB[22m
+[07:11:28.499] [2m../dist/public/[22m[2massets/[22m[36mindex-DaVNQi_G.js                [39m[1m[33m942.60 kB[39m[22m[2m │ gzip: 256.25 kB[22m
+[07:11:28.500] [32m✓ built in 6.17s[39m
+[07:11:28.500] [33m
+[07:11:28.500] (!) Some chunks are larger than 500 kB after minification. Consider:
+[07:11:28.500] - Using dynamic import() to code-split the application
+[07:11:28.500] - Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+[07:11:28.500] - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.[39m
+[07:11:28.564] Installing dependencies...
+[07:11:29.567] 
+[07:11:29.567] up to date in 937ms
+[07:11:29.567] 
+[07:11:29.568] 75 packages are looking for funding
+[07:11:29.568]   run `npm fund` for details
+[07:11:30.275] Build Completed in /vercel/output [20s]
+[07:11:30.333] Deploying outputs...
+[07:11:34.224] 
+[07:11:34.717] Deployment completed
+[07:11:54.147] Uploading build cache [108.25 MB]...
+[07:11:55.612] Build cache uploaded: 1.465s
+[07:11:57.837] Exiting build container

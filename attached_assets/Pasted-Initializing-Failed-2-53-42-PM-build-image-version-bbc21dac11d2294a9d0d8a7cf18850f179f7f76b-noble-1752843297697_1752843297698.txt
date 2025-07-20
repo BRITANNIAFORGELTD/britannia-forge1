@@ -1,0 +1,44 @@
+Initializing
+Failed
+2:53:42 PM: build-image version: bbc21dac11d2294a9d0d8a7cf18850f179f7f76b (noble)
+2:53:42 PM: buildbot version: bbc21dac11d2294a9d0d8a7cf18850f179f7f76b
+2:53:42 PM: Fetching cached dependencies
+2:53:42 PM: Failed to fetch cache, continuing with build
+2:53:42 PM: Starting to prepare the repo for build
+2:53:42 PM: No cached dependencies found. Cloning fresh repo
+2:53:42 PM: git clone --filter=blob:none https://github.com/BRITANNIAFORGELTD/britannia-forge
+2:53:43 PM: Preparing Git Reference refs/heads/main
+2:53:44 PM: Custom publish path detected. Proceeding with the specified path: 'client/dist'
+2:53:44 PM: Custom functions path detected. Proceeding with the specified path: 'client/netlify/functions'
+2:53:44 PM: Starting to install dependencies
+2:53:44 PM: Using PHP version
+2:53:45 PM: v22.17.1 is already installed.
+2:53:45 PM: Now using node v22.17.1 (npm v10.9.2)
+2:53:45 PM: Enabling Node.js Corepack
+2:53:45 PM: Started restoring cached build plugins
+2:53:45 PM: Finished restoring cached build plugins
+2:53:45 PM: Started restoring cached corepack dependencies
+2:53:45 PM: Finished restoring cached corepack dependencies
+2:53:45 PM: No npm workspaces detected
+2:53:45 PM: Started restoring cached node modules
+2:53:45 PM: Finished restoring cached node modules
+2:53:45 PM: Installing npm packages using npm version 10.9.2
+2:53:54 PM: Failed during stage 'Install dependencies': dependency_installation script returned non-zero exit code: 1
+2:53:54 PM: npm error code E404
+2:53:54 PM: npm error 404 Not Found - GET https://registry.npmjs.org/@radix-ui%2freact-button - Not found
+2:53:54 PM: npm error 404
+2:53:54 PM: npm error 404  '@radix-ui/react-button@^1.1.0' is not in this registry.
+2:53:54 PM: npm error 404
+2:53:54 PM: npm error 404 Note that you can also install from a
+2:53:54 PM: npm error 404 tarball, folder, http url, or git url.
+2:53:54 PM: npm error A complete log of this run can be found in: /opt/buildhome/.npm/_logs/2025-07-18T12_53_45_892Z-debug-0.log
+2:53:54 PM: Error during npm install
+2:53:54 PM: Failing build: Failed to install dependencies
+Building
+Complete
+Deploying
+Skipped
+Cleanup
+Skipped
+Post-processing
+Skipped

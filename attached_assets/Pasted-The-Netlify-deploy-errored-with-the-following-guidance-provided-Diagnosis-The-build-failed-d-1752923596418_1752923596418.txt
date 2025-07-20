@@ -1,0 +1,68 @@
+The Netlify deploy errored, with the following guidance provided:
+
+**Diagnosis:**
+The build failed due to a configuration error where the deploy directory 'client/client/dist' does not exist as specified in the Netlify configuration.
+
+**Solution:**
+1. Verify that the directory 'client/client/dist' exists in the repository.
+2. If the directory exists locally but is not being deployed, ensure it is included in the build process output.
+3. Update the publish directory in the Netlify configuration to match the correct path where the build artifacts are located before deployment. In this case, change the `publish` path to `/opt/build/repo/client/dist` to align with the actual directory structure.
+4. Make sure to commit any changes to the repository before triggering the build again.
+
+The relevant error logs are:
+
+Line 22: Started restoring cached node modules
+Line 23: Finished restoring cached node modules
+Line 24: Installing npm packages using npm version 10.8.2
+Line 25: added 270 packages in 15s
+Line 26: npm packages installed
+Line 27: Successfully installed dependencies
+Line 28: Starting build script
+Line 29: Detected 1 framework(s)
+Line 30: "vite" at version "5.4.19"
+Line 31: Section completed: initializing
+Line 32: Failed during stage 'building site': Build script returned non-zero exit code: 2
+Line 33: [96m[1m​[22m[39m
+Line 34: [96m[1mNetlify Build                                                 [22m[39m
+Line 35: [96m[1m────────────────────────────────────────────────────────────────[22m[39m
+Line 36: [36m[1m​[22m[39m
+Line 37: [36m[1m❯ Version[22m[39m
+Line 38:   @netlify/build 34.2.5
+Line 39: [36m[1m​[22m[39m
+Line 40: [36m[1m❯ Flags[22m[39m
+Line 41:   accountId: 6879fd5291a98f14c32c500e
+Line 42:   baseRelDir: true
+Line 80: ​
+Line 81: The Netlify Functions setting targets a non-existing directory: netlify/functions
+Line 82: ​
+Line 83: [90m(Functions bundling completed in 2ms)[39m
+Line 84: [96m[1m​[22m[39m
+Line 85: [96m[1mDeploy site                                                   [22m[39m
+Line 86: [96m[1m────────────────────────────────────────────────────────────────[22m[39m
+Line 87: ​
+Line 88: Section completed: deploying
+Line 89: [91m[1m​[22m[39m
+Line 90: [91m[1mConfiguration error                                           [22m[39m
+Line 91: [91m[1m────────────────────────────────────────────────────────────────[22m[39m
+Line 92: ​
+Line 93:   [31m[1mError message[22m[39m
+Line 94:   Deploy did not succeed: Deploy directory 'client/client/dist' does not exist
+Line 95: ​
+Line 96:   [31m[1mResolved config[22m[39m
+Line 97:   build:
+Line 98:     base: /opt/build/repo/client
+Line 99:     command: npm run build
+Line 100:     commandOrigin: config
+Line 101:     environment:
+Line 102:       - NODE_VERSION
+Line 103:     publish: /opt/build/repo/client/client/dist
+Line 104:     publishOrigin: config
+Line 105:   functionsDirectory: /opt/build/repo/client/netlify/functions
+Line 106:   redirects:
+Line 107:     - from: /*
+      status: 200
+      to: /index.html
+  redirectsOrigin: config
+Line 108: Build failed due to a user error: Build script returned non-zero exit code: 2
+Line 109: Failing build: Failed to build site
+Line 110: Finished processing build request in 29.533s

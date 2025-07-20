@@ -1,0 +1,65 @@
+make,model,boiler_type,tier,dwh_kw,flow_rate_lpm,warranty_years,efficiency_rating,supply_price
+Alpha,E-Tec Plus 28kW Combi,Combi,Budget,28.3,12.1,10,A,100000
+Alpha,E-TEC NXS System,System,Budget,,,10,A,
+Ariston,Clas One 30kW Combi,Combi,Budget,30,12.5,8,A,92800
+Ariston,E-Combi One 26kW Combi,Combi,Budget,26,,2,A,64999
+Ariston,E-Combi One 30kW Combi,Combi,Budget,30,,2,A,70700
+Ariston,Clas System ONE 18kW,System,Budget,,,8,A,77500
+ATAG,iC 24kW Combi,Combi,Premium,24,10.1,14,A,130000
+ATAG,iC 40kW Combi,Combi,Premium,42,16.2,14,A,148000
+ATAG,iC Economiser Plus 27kW Combi,Combi,Premium,27,12.6,14,A,195000
+ATAG,iS 15kW System,System,Premium,,,18,A,127000
+ATAG,iR 15kW Regular,Regular,Premium,,,14,A,115000
+Baxi,800 Combi 2 24kW,Combi,Mid-Range,24,10.2,10,A,98000
+Baxi,800 Combi 2 30kW,Combi,Mid-Range,30,12.2,10,A,136738
+Baxi,800 Combi 2 36kW,Combi,Mid-Range,36,15,10,A,120000
+Baxi,600 Combi 2 24kW,Combi,Mid-Range,24,10.2,7,A,78998
+Baxi,600 Combi 2 30kW,Combi,Mid-Range,30,12.2,7,A,
+Baxi,400 Combi 24kW,Combi,Budget,24,10.2,5,A,66250
+Baxi,800 System 2 18kW,System,Mid-Range,,,10,A,
+Baxi,600 System 2 24kW,System,Mid-Range,,,7,A,
+Baxi,400 Heat 15kW,Regular,Budget,,,5,A,
+Ferroli,BLUEHELIX RRT Tech 24C Combi,Combi,Budget,24.5,11.7,10,A,80000
+Ferroli,Modena HE 32c Combi,Combi,Budget,32,18.3,5,A,66500
+Ferroli,BLUEHELIX RRT Tech 18S System,System,Budget,,,10,A,56500
+Glow-worm,Energy 30c Combi,Combi,Budget,30.6,12.4,7,A,120840
+Glow-worm,Compact 24C Combi,Combi,Budget,24,,5,A,59880
+Glow-worm,Betacom4 24kW Combi,Combi,Budget,21.2,,5,A,52500
+Glow-worm,Energy 18R Regular,Regular,Budget,,,7,A,128640
+Ideal,Logic Max Combi2 C24,Combi,Mid-Range,24.2,9.9,10,A,134880
+Ideal,Logic Max Combi2 C30,Combi,Mid-Range,30.3,12.4,10,A,138500
+Ideal,Vogue Max Combi 26kW,Combi,Premium,26,10.6,12,A,99609
+Ideal,Vogue Max Combi 32kW,Combi,Premium,32,13.1,12,A,159900
+Ideal,Logic Max System2 S15,System,Mid-Range,,,10,A,148080
+Ideal,Vogue Max System 32kW,System,Premium,,,12,A,116130
+Ideal,Logic Max Heat2 H12,Regular,Mid-Range,,,10,A,135240
+Main,Eco Compact 25kW Combi,Combi,Budget,25,10.2,5,A,71847
+Main,Eco Compact 30kW Combi,Combi,Budget,30,12.2,5,A,78898
+Main,Eco Compact 18kW System,System,Budget,,,5,A,67500
+Main,Eco Compact 15kW Regular,Regular,Budget,,,5,A,87686
+Navien,NCB300 28kW Combi,Combi,Budget,28,13,7,A,63924
+Navien,NCB 40kW Combi,Combi,Budget,39.6,16.9,7,A,190000
+Navien,NCB500 24kW System,System,Budget,,,7,A,89000
+Potterton,Titanium 24kW Combi,Combi,Budget,24,,7,A,72000
+Potterton,Assure 30kW Combi,Combi,Budget,30,,2,A,94200
+Potterton,Promax 12kW System,System,Budget,,,2,A,81674
+Potterton,Titanium 24kW Heat,Regular,Budget,,,7,A,81744
+Vaillant,ecoTEC plus 832 Combi,Combi,Premium,32,13,10,A,187560
+Vaillant,ecoFIT pure 825 Combi,Combi,Premium,25.2,10.4,10,A,129500
+Vaillant,ecoTEC pro 28 Combi,Combi,Premium,28,11.1,7,A,
+Vaillant,ecoTEC plus 624 System,System,Premium,,,10,A,
+Vaillant,ecoFIT pure 615 System,System,Premium,,,10,A,136599
+Vaillant,ecoTEC plus 418 Regular,Regular,Premium,,,10,A,
+Viessmann,Vitodens 100-W 30kW Combi,Combi,Premium,31.7,13.4,12,A,128991
+Viessmann,Vitodens 050-W 25kW Combi,Combi,Premium,25,,12,A,87978
+Viessmann,Vitodens 200-W 30kW Combi,Combi,Premium,30,,12,A,159867
+Viessmann,Vitodens 100-W 25kW System,System,Premium,,,12,A,124853
+Viessmann,Vitodens 100-W 16kW Heat Only,Regular,Premium,,,12,A,102114
+Worcester Bosch,Greenstar 4000 25kW Combi,Combi,Premium,25,10.2,10,A,115000
+Worcester Bosch,Greenstar 4000 30kW Combi,Combi,Premium,30,12.3,10,A,138808
+Worcester Bosch,Greenstar 8000 Life 30kW Combi,Combi,Premium,32,12.3,12,A,175900
+Worcester Bosch,Greenstar 8000 Life 35kW Combi,Combi,Premium,34.4,14.3,12,A,131500
+Worcester Bosch,Greenstar 2000 25kW Combi,Combi,Budget,25,10,6,A,
+Worcester Bosch,Greenstar 4000 18kW System,System,Premium,,,10,A,139299
+Worcester Bosch,Greenstar 8000 Life 30kW System,System,Premium,,,12,A,150535
+Worcester Bosch,Greenstar 15Ri Regular,Regular,Premium,,,10,A,115799

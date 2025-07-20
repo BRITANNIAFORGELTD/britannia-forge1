@@ -1,0 +1,107 @@
+Support Center
+Create and view support cases for your projects. Learn more
+
+Build Failure - Vite Path Alias Resolution Error on Vercel Deployment
+Last updated 18/07/2025·Opened 13h ago
+
+Britannia Forge
+Britannia Forge
+
+17 July 2025 at 18:23
+
+
+"Build fails with error '[vite]: Rollup failed to resolve import '@/components/ui/toaster'' on one Vercel project while succeeding on another."
+
+
+Subject: Build Failure - Vite Path Alias Resolution Error on Vercel Deployment
+
+Hello Vercel Support Team,
+
+I'm experiencing a persistent build failure when deploying my React/Express application to Vercel. Interestingly, I have two deployments of the same codebase - one works perfectly (britannia-forge) while the other fails consistently (britannia-forge-it3k).
+
+## Error Details:
+The build fails with the following error:
+```
+[vite]: Rollup failed to resolve import "@/components/ui/toaster" from "/vercel/path0/client/src/App.tsx".
+This is most likely unintended because it can break your application at runtime.
+```
+
+## Project Configuration:
+- Framework: Vite 5.4.19 with React 18
+- Backend: Express.js with ES modules
+- Package.json type: "module"
+- Repository: github.com/BRITANNIAFORGELTD/britannia-forge
+
+## What I've Tried:
+1. Various vercel.json configurations including:
+- Different build commands (npm run build, vite build, NODE_ENV=production npx vite build)
+- Multiple install commands (npm install, npm install --legacy-peer-deps)
+- Custom build scripts
+
+2. Updated tsconfig.json paths configuration to ensure all aliases are defined
+
+3. Converted all files from CommonJS to ES modules for compatibility
+
+4. The application builds and runs perfectly locally using the same commands
+
+## Key Observations:
+- The vite.config.ts uses path aliases defined with `import.meta.dirname`
+- The same codebase deploys successfully on one Vercel project but fails on another
+- The error specifically occurs during Rollup's module resolution phase
+- All required files exist and are properly structured
+
+## Current vercel.json:
+```json
+{
+"buildCommand": "vite build",
+"outputDirectory": "dist/public",
+"installCommand": "npm install",
+"functions": {
+"api/index.js": {
+"maxDuration": 30
+}
+},
+"rewrites": [
+{
+"source": "/api/(.*)",
+"destination": "/api/index.js"
+},
+{
+"source": "/(.*)",
+"destination": "/$1"
+}
+]
+}
+```
+
+## Questions:
+1. Why would the same codebase build successfully in one Vercel project but fail in another?
+2. Are there any project-specific settings or environment configurations that might affect Vite's path resolution during build?
+3. Is there a known issue with Vite's `import.meta.dirname` usage in Vercel's build environment?
+
+I would greatly appreciate any guidance on resolving this issue. The working deployment proves the code is valid, so I suspect there might be a configuration difference between the two Vercel projects.
+
+Thank you for your assistance.
+
+Best regards
+Britannia Forge
+Britannia Forge
+
+17 July 2025 at 22:02
+
+
+Hello, anybody here?
+Vercel Support
+
+18 July 2025 at 03:47
+
+
+Hello there,
+
+Thank you for reaching out to Vercel Support. My name is Thaer, and I'm happy to work with you to resolve this. Thanks for reaching out. I totally get how frustrating it can be to run into a build error, especially when the exact same code works in one Vercel project but fails in another. Let’s take a look at what could be going on. First, even with the same codebase, differences in project settings can sometimes cause issues. It’s a good idea to double-check that both projects have the same framework preset selected (make sure it’s set to Vite) and that all environment variables are identical. A missing or slightly different variable could affect how things are built. The error you’re seeing suggests Vite (via Rollup) couldn’t resolve the path alias for @/components/ui/toaster. If you’re using import.meta.dirname in your vite.config.ts to set up path aliases, that might behave slightly differently in Vercel’s build environment. You might want to try switching it temporarily to an absolute path or another approach just to rule that out. Your vercel.json looks mostly fine, and since this is a Vite app, it’s good that you’ve set up rewrites. If this is a single-page application, just make sure routing is falling back to index.html as expected. If you’re still stuck, feel free to share the full build logs from the project that’s failing (britannia-forge-it3k) and links to both a working and a failing builds from the identical projects. 
+
+Let me know what you find or if you’d like help comparing the two projects directly. Happy to keep digging into this with you.
+Thaer Bashir
+▲ Customer Support Engineer at Vercel
+Your message...
+

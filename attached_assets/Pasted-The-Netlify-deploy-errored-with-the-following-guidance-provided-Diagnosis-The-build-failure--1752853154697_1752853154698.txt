@@ -1,0 +1,91 @@
+The Netlify deploy errored, with the following guidance provided:
+
+**Diagnosis:**
+The build failure is due to the parsing error of the `tsconfig.node.json` file in the Vite build process.
+
+**Solution:**
+1. The error indicates that the `tsconfig.node.json` file is missing. Verify that the `tsconfig.node.json` file is present in the `/client` directory of your repository.
+
+2. If the `tsconfig.node.json` file is part of your project, ensure that it is committed to the repository. If it's missing, add the `tsconfig.node.json` file to your repository.
+
+3. Make sure that the path to the `tsconfig.node.json` file is correct and matches the actual file location in your project.
+
+By addressing these points, you should be able to resolve the parsing error related to the `tsconfig.node.json` file.
+
+The relevant error logs are:
+
+Line 16: Now using node v18.20.8 (npm v10.8.2)
+Line 17: Enabling Node.js Corepack
+Line 18: Started restoring cached build plugins
+Line 19: Finished restoring cached build plugins
+Line 20: Started restoring cached corepack dependencies
+Line 21: Finished restoring cached corepack dependencies
+Line 22: No npm workspaces detected
+Line 23: Started restoring cached node modules
+Line 24: Finished restoring cached node modules
+Line 25: Installing npm packages using npm version 10.8.2
+Line 26: Failed during stage 'building site': Build script returned non-zero exit code: 2
+Line 27: added 255 packages in 14s
+Line 28: npm packages installed
+Line 29: Successfully installed dependencies
+Line 30: Starting build script
+Line 31: Detected 1 framework(s)
+Line 32: "vite" at version "5.4.19"
+Line 33: Section completed: initializing
+Line 34: [96m[1m​[22m[39m
+Line 35: [96m[1mNetlify Build                                                 [22m[39m
+Line 36: [96m[1m────────────────────────────────────────────────────────────────[22m[39m
+Line 52: [36m[1m​[22m[39m
+Line 53: [36m[1m❯ Context[22m[39m
+Line 54:   production
+Line 55: [96m[1m​[22m[39m
+Line 56: [96m[1mbuild.command from netlify.toml                               [22m[39m
+Line 57: [96m[1m────────────────────────────────────────────────────────────────[22m[39m
+Line 58: ​
+Line 59: [36m$ npm run build[39m
+Line 60: > britannia-forge-client@0.0.0 build
+Line 61: > npx vite build
+Line 62: [tsconfig-paths] An error occurred while parsing "/opt/build/repo/client/tsconfig.json". See below for details. To disable this 
+Line 63: TSConfckParseError: parsing /opt/build/repo/client/tsconfig.node.json failed: Error: ENOENT: no such file or directory, open '/o
+Line 64:     at [90mfile:///opt/build/repo/client/[39mnode_modules/[4mtsconfck[24m/src/parse.js:114:10 {
+Line 65:   code: [32m'PARSE_FILE'[39m,
+Line 66:   cause: [Error: ENOENT: no such file or directory, open '/opt/build/repo/client/tsconfig.node.json'] {
+Line 67:     errno: [33m-2[39m,
+Line 68:     code: [32m'ENOENT'[39m,
+Line 69:     syscall: [32m'open'[39m,
+Line 70:     path: [32m'/opt/build/repo/client/tsconfig.node.json'[39m
+Line 71:   },
+Line 72:   tsconfigFile: [32m'/opt/build/repo/client/tsconfig.node.json'[39m
+Line 73: }
+Line 74: [36mvite v5.4.19 [32mbuilding for production...[36m[39m
+Line 75: transforming...
+Line 76: [32m✓[39m 2 modules transformed.
+Line 77: [31mx[39m Build failed in 39ms
+Line 78: [31merror during build:
+Line 79: [31m[vite:esbuild] parsing /opt/build/repo/client/tsconfig.node.json failed: Error: ENOENT: no such file or directory, open '/o
+Line 80: file: [36m/opt/build/repo/client/src/main.tsx[31m
+Line 81:     at file:///opt/build/repo/client/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:18698:10[39m
+Line 82: [91m[1m​[22m[39m
+Line 83: [91m[1m"build.command" failed                                        [22m[39m
+Line 84: [91m[1m────────────────────────────────────────────────────────────────[22m[39m
+Line 85: ​
+Line 86:   [31m[1mError message[22m[39m
+Line 87:   Command failed with exit code 1: npm run build
+Line 88: ​
+Line 89:   [31m[1mError location[22m[39m
+Line 90:   In build.command from netlify.toml:
+Line 91:   npm run build
+Line 92: ​
+Line 93:   [31m[1mResolved config[22m[39m
+Line 94:   build:
+Line 95:     base: /opt/build/repo/client
+Line 96:     command: npm run build
+Line 97:     commandOrigin: config
+Line 98:     environment:
+Line 99:       - NODE_VERSION
+Line 100:     publish: /opt/build/repo/client/dist
+Line 101:     publishOrigin: config
+Line 102:   functionsDirectory: /opt/build/repo/client/netlify/functions
+Line 103: Build failed due to a user error: Build script returned non-zero exit code: 2
+Line 104: Failing build: Failed to build site
+Line 105: Finished processing build request in 23.488s

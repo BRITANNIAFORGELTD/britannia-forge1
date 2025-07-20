@@ -1,0 +1,83 @@
+Prompt for AI Code Designer: Architect and Build the Dynamic Pricing Backend
+Objective:
+
+This is a formal directive to architect and build the foundational backend for the Britannia Forge platform. The current system relies on static, hardcoded pricing data, which is not scalable. Your task is to build a secure, database-driven Admin Dashboard for managing all pricing and product information, and then refactor the "Intelligent Quote Engine" to use this new dashboard as its single source of truth.
+
+Phase 1: Build the Admin Database & API
+Task: Create the database tables and server-side API endpoints required to power the Admin Dashboard.
+
+1.1: Database Schema:
+
+Action: Using the existing Supabase/PostgreSQL database, define and create the necessary tables to store the data from the provided CSV files:
+
+boilers (from Boilers_rows.csv)
+
+labour_costs (from Labour_Costs_rows.csv)
+
+sundries (from Sundries_rows.csv)
+
+conversion_scenarios (from Boiler_Conversion_Scenarios.csv)
+
+heating_scenarios (from Granular_Heating_Scenarios.numbers)
+
+Requirement: The table columns must match the headers in the provided files (e.g., make, model, kw, supply_price, job_type, city, etc.).
+
+1.2: Data Seeding:
+
+Action: Create a one-time "seeding" script that reads the provided CSV files and populates the new database tables with this initial data.
+
+1.3: Admin API Endpoints:
+
+Action: Create a new set of secure API routes in the server/ directory (e.g., under /api/admin/...).
+
+Requirement: These endpoints must provide full CRUD (Create, Read, Update, Delete) functionality for every new database table. For example:
+
+GET /api/admin/boilers - Fetches all boiler data.
+
+POST /api/admin/boilers - Adds a new boiler.
+
+PUT /api/admin/boilers/:id - Updates an existing boiler.
+
+DELETE /api/admin/boilers/:id - Deletes a boiler.
+
+(Repeat for labour, sundries, etc.)
+
+Phase 2: Implement Admin Security
+Task: Secure the Admin Dashboard and its API endpoints.
+
+2.1: Secure API:
+
+Action: All /api/admin/... routes must be protected and require a logged-in user with an "admin" role.
+
+2.2: Implement Secure Login & Password Recovery:
+
+Action: Enhance the existing Admin Dashboard login system.
+
+Requirement:
+
+Implement a "Forgot Password" feature.
+
+When an admin requests a password reset, the system must send a secure, one-time reset link to two email addresses simultaneously: britanniaforge@gmail.com and admin@britanniaforge.co.uk.
+
+Future Enhancement: The architecture should allow for the future integration of a Time-based One-Time Password (TOTP) system like Google Authenticator for two-factor authentication (2FA).
+
+Phase 3: Connect the "Intelligent Quote Engine"
+Task: This is the most critical step. Refactor the intelligent-quote-engine.ts to make it fully dynamic.
+
+File to Modify: client/src/lib/intelligent-quote-engine.ts
+
+Action:
+
+Remove all static data: Delete the hardcoded PRICING_BIBLE object and any other static pricing arrays from the file.
+
+Implement API Calls: Rewrite all calculation functions to fetch their data live from the new Admin API endpoints.
+
+calculateOptimalBoilerSize must now fetch boiler data from /api/admin/boilers.
+
+The main calculateIntelligentQuote function must fetch labour costs from /api/admin/labour (filtered by postcode/city), sundries costs from /api/admin/sundries, etc.
+
+Result: The quote engine will no longer rely on outdated, static data. Its calculations will always reflect the latest prices and product information managed by the administrator in the dashboard.
+
+Final Output:
+
+Provide the code in three distinct phases. First, deliver the complete code for the database schema and the data seeding script. Second, deliver the code for the secure Admin API endpoints and the enhanced login/recovery logic. Finally, deliver the fully refactored intelligent-quote-engine.ts module that uses these new APIs.

@@ -1,0 +1,28 @@
+Prompt for AI Code Generator: Strategic Alignment & Project Roadmap Execution
+Objective:
+
+This is a formal directive to align on the development strategy for the Britannia Forge project. We will be proceeding based on the findings of your recent "Technical Architecture Report" and adopting a new, iterative development workflow.
+
+1. Acknowledgment of Your Analysis
+Your technical report has been reviewed and approved. Your analysis of the existing codebase (React/TypeScript, Express, PostgreSQL) and the external services is accurate. Furthermore, your proposed implementation roadmap is strategically sound and aligns with our business objectives. We will be adopting your recommended phased approach, starting with the highest-impact features.
+
+2. Our New Development Workflow
+To ensure the highest quality, we are implementing a professional, iterative development process. Please confirm your understanding of the following workflow:
+
+Feature-Based Sprints: We will focus on building one major feature at a time (e.g., "Financing," then "PDF Generation," etc.).
+
+Iterative Prompting: For each feature, I will provide you with a series of detailed prompts. We will refine and improve the code for that single feature until it is perfect and meets all requirements.
+
+Delayed Deployment: You will not be expected to push every minor change to the GitHub repository. We will work on perfecting the code for each feature in our development environment. Only once a feature is fully complete and approved will we merge it into the main project.
+
+Please confirm you can adapt to this iterative workflow.
+
+3. Platform Update: Hosting Provider
+Please update your records. The official deployment platform for this project is now Netlify. While this does not change the core code, all future deployment-related advice or configuration should be tailored for the Netlify environment.
+
+4. Next Action: Phase 1 Implementation
+As per your excellent report, the first and most critical task is to implement customer financing options to improve conversion rates.
+
+Please prepare to receive the first detailed prompt for implementing Klarna and/or PayPal financing options into the existing checkout and quote system.
+
+Your task for now is to acknowledge these instructions and confirm you are ready to begin work on the financing feature.
