@@ -442,7 +442,7 @@ export async function calculateDynamicIntelligentQuote(quoteData: QuoteData): Pr
         bathrooms: quoteData.bathrooms,
         occupants: parseInt(quoteData.occupants || "2"),
         postcode: quoteData.postcode || '',
-        demandScore: (quoteData.bedrooms * 0.6) + (quoteData.bathrooms * 1.2) + (parseInt(quoteData.occupants || "2") * 0.3)
+        demandScore: (parseInt(quoteData.bedrooms?.toString() || "0") * 0.6) + (parseInt(quoteData.bathrooms?.toString() || "0") * 1.2) + (parseInt(quoteData.occupants || "2") * 0.3)
       },
       recommendedBoilerType: boilerAnalysis.recommendedType,
       recommendedSize,
@@ -560,7 +560,7 @@ async function fallbackQuoteCalculation(quoteData: QuoteData): Promise<Intellige
       bathrooms: quoteData.bathrooms,
       occupants: parseInt(quoteData.occupants || "2"),
       postcode: quoteData.postcode || '',
-      demandScore: (quoteData.bedrooms * 0.6) + (quoteData.bathrooms * 1.2) + (parseInt(quoteData.occupants || "2") * 0.3)
+              demandScore: (parseInt(quoteData.bedrooms?.toString() || "0") * 0.6) + (parseInt(quoteData.bathrooms?.toString() || "0") * 1.2) + (parseInt(quoteData.occupants || "2") * 0.3)
     },
     recommendedBoilerType: boilerAnalysis.recommendedType,
     recommendedSize,

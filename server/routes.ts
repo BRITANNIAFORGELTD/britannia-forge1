@@ -887,52 +887,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Emergency admin login endpoint (bypasses database completely)
-  app.post("/api/emergency-admin-login", async (req, res) => {
-    try {
-      const { email, password } = req.body;
-      
-      // Direct admin authentication - no database needed
-      if (email === 'admin@britanniaforge.co.uk' && password === 'BritanniaAdmin2025!') {
-        console.log('🔑 EMERGENCY ADMIN LOGIN SUCCESSFUL');
-        
-        const adminUser = {
-          id: 1,
-          fullName: 'System Administrator',
-          email: 'admin@britanniaforge.co.uk',
-          userType: 'admin',
-          emailVerified: true
-        };
-        
-        // Generate token using AuthService
-        const jwt = require('jsonwebtoken');
-        const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
-        
-        const token = jwt.sign(
-          { 
-            id: adminUser.id, 
-            email: adminUser.email, 
-            userType: adminUser.userType,
-            emailVerified: adminUser.emailVerified 
-          },
-          JWT_SECRET,
-          { expiresIn: '24h' }
-        );
-        
-        return res.json({
-          success: true,
-          message: 'Emergency admin login successful',
-          user: adminUser,
-          token,
-          requiresVerification: false
-        });
-      }
-      
-      res.status(401).json({ error: 'Invalid emergency admin credentials' });
-    } catch (error) {
-      console.error('Emergency admin login error:', error);
-      res.status(500).json({ error: "Emergency login failed" });
-    }
-  });
+  // Removed emergency admin login endpoint - critical security vulnerability
+  // This endpoint allowed hardcoded credentials and bypassed proper authentication
+  // Admin users should use the regular login endpoint with database authentication
 
   // User management - Admin only (can create/delete editors)
   app.get("/api/admin/users", authenticateToken, requireAdmin, async (req, res) => {
