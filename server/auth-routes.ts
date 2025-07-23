@@ -148,7 +148,12 @@ router.post('/login', async (req, res) => {
     const validatedData = loginSchema.parse(req.body);
     
     // Emergency admin bypass for database issues - MUST BE FIRST
-    if (validatedData.email === 'admin@britanniaforge.co.uk' && validatedData.password === 'BritanniaAdmin2025!') {
+    const EMERGENCY_ADMIN_EMAIL = process.env.EMERGENCY_ADMIN_EMAIL;
+    const EMERGENCY_ADMIN_PASSWORD = process.env.EMERGENCY_ADMIN_PASSWORD;
+    
+    if (EMERGENCY_ADMIN_EMAIL && EMERGENCY_ADMIN_PASSWORD && 
+        validatedData.email === EMERGENCY_ADMIN_EMAIL && 
+        validatedData.password === EMERGENCY_ADMIN_PASSWORD) {
       console.log('🔑 ADMIN BYPASS ACTIVATED - Direct access granted');
       
       const adminUser = {

@@ -892,7 +892,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { email, password } = req.body;
       
       // Direct admin authentication - no database needed
-      if (email === 'admin@britanniaforge.co.uk' && password === 'BritanniaAdmin2025!') {
+      const EMERGENCY_ADMIN_EMAIL = process.env.EMERGENCY_ADMIN_EMAIL;
+      const EMERGENCY_ADMIN_PASSWORD = process.env.EMERGENCY_ADMIN_PASSWORD;
+      
+      if (EMERGENCY_ADMIN_EMAIL && EMERGENCY_ADMIN_PASSWORD && 
+          email === EMERGENCY_ADMIN_EMAIL && password === EMERGENCY_ADMIN_PASSWORD) {
         console.log('🔑 EMERGENCY ADMIN LOGIN SUCCESSFUL');
         
         const adminUser = {
@@ -905,7 +909,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
         
         // Generate token using AuthService
         const jwt = require('jsonwebtoken');
-        const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
+        const JWT_SECRET = process.env.JWT_SECRET;
+        
+        if (!JWT_SECRET) {
+          throw new Error('JWT_SECRET environment variable is required');
+        }
         
         const token = jwt.sign(
           { 

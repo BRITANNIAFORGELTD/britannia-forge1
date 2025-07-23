@@ -814,22 +814,39 @@ export class DatabaseStorage implements IStorage {
 
   async getServiceLeads(filters: { serviceType?: string; postcode?: string; showPurchasedOnly?: boolean }): Promise<any[]> {
     try {
-      // Use raw SQL to avoid ORM column naming issues
-      const requestsQuery = `
+      // Use parameterized queries to prevent SQL injection
+      let requestsQuery = `
         SELECT id, service_type, service_name, service_icon, customer_name, 
                customer_email, customer_phone, postcode, urgency, description, 
                created_at, lead_price 
         FROM service_requests
-        ${filters.serviceType ? `WHERE service_type = '${filters.serviceType}'` : ''}
-        ${filters.postcode ? `${filters.serviceType ? 'AND' : 'WHERE'} postcode ILIKE '%${filters.postcode}%'` : ''}
       `;
+      
+      const params: any[] = [];
+      const conditions: string[] = [];
+      
+      if (filters.serviceType) {
+        conditions.push('service_type = $' + (params.length + 1));
+        params.push(filters.serviceType);
+      }
+      
+      if (filters.postcode) {
+        conditions.push('postcode ILIKE $' + (params.length + 1));
+        params.push(`%${filters.postcode}%`);
+      }
+      
+      if (conditions.length > 0) {
+        requestsQuery += ' WHERE ' + conditions.join(' AND ');
+      }
       
       const purchasesQuery = `
         SELECT service_request_id, engineer_email, created_at 
         FROM lead_purchases
       `;
       
-      const requestsResult = await db.execute(requestsQuery);
+      const requestsResult = params.length > 0 
+        ? await db.execute(requestsQuery, params)
+        : await db.execute(requestsQuery);
       const purchasesResult = await db.execute(purchasesQuery);
       
       const requests = requestsResult.rows;
