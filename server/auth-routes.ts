@@ -142,35 +142,15 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// Login endpoint with admin bypass
+// Login endpoint
 router.post('/login', async (req, res) => {
   try {
     const validatedData = loginSchema.parse(req.body);
     
-    // Emergency admin bypass for database issues - MUST BE FIRST
-    if (validatedData.email === 'admin@britanniaforge.co.uk' && validatedData.password === 'BritanniaAdmin2025!') {
-      console.log('🔑 ADMIN BYPASS ACTIVATED - Direct access granted');
-      
-      const adminUser = {
-        id: 1,
-        fullName: 'System Administrator',
-        email: 'admin@britanniaforge.co.uk',
-        userType: 'admin',
-        emailVerified: true
-      };
-      
-      const token = AuthService.generateToken(adminUser as any);
-      
-      return res.json({
-        success: true,
-        message: 'Admin login successful',
-        user: adminUser,
-        token,
-        requiresVerification: false
-      });
-    }
+    // Removed hardcoded admin bypass - critical security vulnerability fixed
+    // All users including admins must authenticate through the database
     
-    // Regular login flow (only if not admin)
+    // Regular login flow for all users
     const { user, token, requiresVerification } = await AuthService.login(validatedData.email, validatedData.password);
     
     res.json({

@@ -5,7 +5,10 @@ import crypto from 'crypto';
 import { storage } from './storage';
 import type { User } from '@shared/schema';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
+const JWT_SECRET = process.env.JWT_SECRET;
+if (!JWT_SECRET) {
+  throw new Error('JWT_SECRET environment variable is required for authentication');
+}
 const SALT_ROUNDS = 12;
 
 // Email configuration
@@ -63,9 +66,11 @@ export class AuthService {
 
   // Send verification email
   static async sendVerificationEmail(email: string, code: string): Promise<void> {
-    // For development/demo purposes, log the verification code to console
-    console.log(`🔐 EMAIL VERIFICATION CODE FOR ${email}: ${code}`);
-    console.log(`📧 In production, this would be sent via email`);
+    // Only log in development mode, never in production
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`🔐 EMAIL VERIFICATION CODE FOR ${email}: ${code}`);
+      console.log(`📧 In production, this would be sent via email`);
+    }
     
     // Skip actual email sending for now to prevent authentication errors
     // In production, uncomment the email sending code below:

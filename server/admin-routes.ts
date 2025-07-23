@@ -36,7 +36,11 @@ router.get('/boilers', async (req, res) => {
 router.get('/boilers/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const boiler = await db.select().from(boilers).where(eq(boilers.id, parseInt(id)));
+    const boilerId = parseInt(id);
+    if (isNaN(boilerId)) {
+      return res.status(400).json({ error: 'Invalid boiler ID' });
+    }
+    const boiler = await db.select().from(boilers).where(eq(boilers.id, boilerId));
     
     if (boiler.length === 0) {
       return res.status(404).json({ success: false, error: 'Boiler not found' });
@@ -66,12 +70,16 @@ router.post('/boilers', async (req, res) => {
 router.put('/boilers/:id', async (req, res) => {
   try {
     const { id } = req.params;
+    const boilerId = parseInt(id);
+    if (isNaN(boilerId)) {
+      return res.status(400).json({ error: 'Invalid boiler ID' });
+    }
     const validatedData = createBoilerSchema.partial().parse(req.body);
     
     const updatedBoiler = await db
       .update(boilers)
       .set(validatedData)
-      .where(eq(boilers.id, parseInt(id)))
+      .where(eq(boilers.id, boilerId))
       .returning();
     
     if (updatedBoiler.length === 0) {
