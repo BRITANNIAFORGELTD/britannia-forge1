@@ -142,19 +142,24 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// Login endpoint with admin bypass
+// Login endpoint
 router.post('/login', async (req, res) => {
   try {
     const validatedData = loginSchema.parse(req.body);
     
-    // Emergency admin bypass for database issues - MUST BE FIRST
-    if (validatedData.email === 'admin@britanniaforge.co.uk' && validatedData.password === 'BritanniaAdmin2025!') {
-      console.log('🔑 ADMIN BYPASS ACTIVATED - Direct access granted');
+    // Check for emergency admin bypass using environment variables
+    const emergencyAdminEmail = process.env.EMERGENCY_ADMIN_EMAIL;
+    const emergencyAdminPassword = process.env.EMERGENCY_ADMIN_PASSWORD;
+    
+    if (emergencyAdminEmail && emergencyAdminPassword && 
+        validatedData.email === emergencyAdminEmail && 
+        validatedData.password === emergencyAdminPassword) {
+      console.log('🔑 EMERGENCY ADMIN BYPASS ACTIVATED - Direct access granted');
       
       const adminUser = {
         id: 1,
         fullName: 'System Administrator',
-        email: 'admin@britanniaforge.co.uk',
+        email: emergencyAdminEmail,
         userType: 'admin',
         emailVerified: true
       };

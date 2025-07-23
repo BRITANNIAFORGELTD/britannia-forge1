@@ -22,12 +22,16 @@ const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SEC
   apiVersion: "2025-06-30.basil",
 }) : null;
 
-export async function registerRoutes(app: Express): Promise<Server> {
+export async function registerRoutes(app: Express, rateLimiters?: { authLimiter: any; quoteLimiter: any }): Promise<Server> {
   // Initialize database with pricing data (disabled temporarily for deployment)
   // await storage.seedPricingData();
   
-  // Authentication routes
-  app.use('/api/auth', authRoutes);
+  // Authentication routes with rate limiting
+  if (rateLimiters?.authLimiter) {
+    app.use('/api/auth', rateLimiters.authLimiter, authRoutes);
+  } else {
+    app.use('/api/auth', authRoutes);
+  }
   
   // Admin routes - Dynamic pricing management
   app.use('/api/admin', adminRoutes);
@@ -220,8 +224,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Intelligent quote calculation endpoint
-  app.post("/api/calculate-intelligent-quote", async (req, res) => {
+  // Intelligent quote calculation endpoint with rate limiting
+  const quoteEndpoint = async (req: any, res: any) => {
     try {
       // PHASE 3: Use new intelligent quote engine with real-world data integration
       const { calculateIntelligentQuote } = await import('../client/src/lib/quote-engine');
@@ -302,7 +306,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.error('Error generating intelligent quote:', error);
       res.status(500).json({ error: "Failed to generate intelligent quote. Please try again." });
     }
-  });
+  };
+
+  // Apply rate limiting to quote endpoint
+  if (rateLimiters?.quoteLimiter) {
+    app.post("/api/calculate-intelligent-quote", rateLimiters.quoteLimiter, quoteEndpoint);
+  } else {
+    app.post("/api/calculate-intelligent-quote", quoteEndpoint);
+  }
 
   // Test endpoint for enhanced intelligence (temporary)
   app.post("/api/quote/calculate", async (req, res) => {

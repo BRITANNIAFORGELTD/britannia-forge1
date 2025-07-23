@@ -3,8 +3,42 @@ import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 
 const app = express();
+
+// Rate limiting middleware
+const rateLimit = require('express-rate-limit');
+
+// General rate limiter
+const generalLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+  message: 'Too many requests from this IP, please try again later.',
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+// Stricter rate limiter for auth endpoints
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5, // limit each IP to 5 requests per windowMs
+  message: 'Too many authentication attempts, please try again later.',
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+// Quote generation rate limiter
+const quoteLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hour
+  max: 10, // limit each IP to 10 quote requests per hour
+  message: 'Too many quote requests, please try again later.',
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// Apply rate limiting
+app.use(generalLimiter);
 
 app.use((req, res, next) => {
   const start = Date.now();
@@ -48,7 +82,7 @@ app.use((req, res, next) => {
 
   // Health check only - remove root endpoint to allow frontend serving
 
-  const server = await registerRoutes(app);
+  const server = await registerRoutes(app, { authLimiter, quoteLimiter });
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;

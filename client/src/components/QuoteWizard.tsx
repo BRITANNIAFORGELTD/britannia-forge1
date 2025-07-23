@@ -190,10 +190,16 @@ export default function QuoteWizard() {
       });
       
       if (!response.ok) {
-        throw new Error('Failed to generate quote');
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || `HTTP ${response.status}: Failed to generate quote`);
       }
       
       const intelligentQuote = await response.json();
+      
+      if (!intelligentQuote) {
+        throw new Error('Invalid quote data received');
+      }
+      
       updateQuoteData({ intelligentQuote });
       
       toast({
@@ -202,9 +208,10 @@ export default function QuoteWizard() {
       });
     } catch (error) {
       console.error('Quote generation error:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
       toast({
         title: "Quote Generation Failed",
-        description: "Please try again or contact support.",
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {
