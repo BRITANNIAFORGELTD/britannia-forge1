@@ -38,7 +38,7 @@ router.get('/boilers/:id', async (req, res) => {
     const { id } = req.params;
     const boilerId = parseInt(id);
     if (isNaN(boilerId)) {
-      return res.status(400).json({ error: 'Invalid boiler ID' });
+      return res.status(400).json({ success: false, error: 'Invalid boiler ID' });
     }
     const boiler = await db.select().from(boilers).where(eq(boilers.id, boilerId));
     
@@ -72,7 +72,7 @@ router.put('/boilers/:id', async (req, res) => {
     const { id } = req.params;
     const boilerId = parseInt(id);
     if (isNaN(boilerId)) {
-      return res.status(400).json({ error: 'Invalid boiler ID' });
+      return res.status(400).json({ success: false, error: 'Invalid boiler ID' });
     }
     const validatedData = createBoilerSchema.partial().parse(req.body);
     
