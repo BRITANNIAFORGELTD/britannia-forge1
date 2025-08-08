@@ -33,15 +33,18 @@ export function PricingManagement() {
   });
 
   const updateMutation = useMutation({
-    mutationFn: async ({ type, id, data }: { type: string; id: string; data: any }) => {
+    mutationFn: async ({ type, id, data }: { type: string; id: string | number; data: any }) => {
       return apiRequest('PUT', `/api/admin/${type}/${id}`, data);
     },
-    onSuccess: () => {
+    onSuccess: (_data, variables) => {
       toast({
         title: 'Update successful',
         description: 'Pricing has been updated',
       });
-      queryClient.invalidateQueries({ queryKey: ['/api/admin/'] });
+      // Invalidate the specific list
+      const type = variables.type;
+      const key = `/api/admin/${type}`;
+      queryClient.invalidateQueries({ queryKey: [key] });
       setEditingItem(null);
       setEditValues({});
     },
@@ -54,19 +57,24 @@ export function PricingManagement() {
     },
   });
 
-  const startEdit = (itemId: string, currentValue: string) => {
-    setEditingItem(itemId);
-    setEditValues({ [itemId]: currentValue });
+  const startEdit = (type: 'boilers' | 'labour-costs' | 'sundries', id: number, currentValue: string) => {
+    const key = `${type}-${id}`;
+    setEditingItem(key);
+    setEditValues({ [key]: currentValue });
   };
 
-  const saveEdit = async (type: string, id: string) => {
-    const value = editValues[`${type}-${id}`];
-    if (!value) return;
+  const saveEdit = async (type: 'boilers' | 'labour-costs' | 'sundries', id: number) => {
+    const key = `${type}-${id}`;
+    const value = editValues[key];
+    if (value === undefined || value === null || value === '') return;
 
     updateMutation.mutate({
       type,
       id,
-      data: type === 'boilers' ? { supplyPrice: parseFloat(value) * 100 } : { price: parseFloat(value) * 100 }
+      data:
+        type === 'boilers'
+          ? { supplyPrice: Math.round(parseFloat(value) * 100) }
+          : { price: Math.round(parseFloat(value) * 100) },
     });
   };
 
@@ -129,7 +137,7 @@ export function PricingManagement() {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {boilers?.map((boiler: any) => (
+                    {Array.isArray(boilers) && boilers.map((boiler: any) => (
                       <TableRow key={boiler.id} className="border-slate-600">
                         <TableCell className="text-white">{boiler.make}</TableCell>
                         <TableCell className="text-white">{boiler.model}</TableCell>
@@ -144,7 +152,9 @@ export function PricingManagement() {
                           {editingItem === `boilers-${boiler.id}` ? (
                             <Input
                               value={editValues[`boilers-${boiler.id}`] || ''}
-                              onChange={(e) => setEditValues(prev => ({ ...prev, [`boilers-${boiler.id}`]: e.target.value }))}
+                              onChange={(e) =>
+                                setEditValues((prev) => ({ ...prev, [`boilers-${boiler.id}`]: e.target.value }))
+                              }
                               className="w-24 bg-slate-800/50 border-slate-600 text-white"
                               placeholder="0.00"
                             />
@@ -157,26 +167,17 @@ export function PricingManagement() {
                           <div className="flex items-center space-x-2">
                             {editingItem === `boilers-${boiler.id}` ? (
                               <>
-                                <Button
-                                  size="sm"
-                                  onClick={() => saveEdit('boilers', boiler.id)}
-                                  className="bg-green-600 hover:bg-green-700 text-white"
-                                >
+                                <Button size="sm" onClick={() => saveEdit('boilers', boiler.id)} className="bg-green-600 hover:bg-green-700 text-white">
                                   <Save className="h-3 w-3" />
                                 </Button>
-                                <Button
-                                  size="sm"
-                                  onClick={cancelEdit}
-                                  variant="outline"
-                                  className="border-slate-600 text-slate-300 hover:bg-slate-800"
-                                >
+                                <Button size="sm" onClick={cancelEdit} variant="outline" className="border-slate-600 text-slate-300 hover:bg-slate-800">
                                   <X className="h-3 w-3" />
                                 </Button>
                               </>
                             ) : (
                               <Button
                                 size="sm"
-                                onClick={() => startEdit(`boilers-${boiler.id}`, (boiler.supplyPrice / 100).toString())}
+                                onClick={() => startEdit('boilers', boiler.id, (boiler.supplyPrice / 100).toString())}
                                 variant="outline"
                                 className="border-slate-600 text-slate-300 hover:bg-slate-800"
                               >
@@ -198,9 +199,7 @@ export function PricingManagement() {
           <Card className="glass-card">
             <CardHeader>
               <CardTitle className="text-white">Labour Costs</CardTitle>
-              <CardDescription className="text-slate-300">
-                Manage labour pricing by job type and tier
-              </CardDescription>
+              <CardDescription className="text-slate-300">Manage labour pricing by job type and tier</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="overflow-x-auto">
@@ -215,7 +214,7 @@ export function PricingManagement() {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {labourCosts?.map((labour: any) => (
+                    {Array.isArray(labourCosts) && labourCosts.map((labour: any) => (
                       <TableRow key={labour.id} className="border-slate-600">
                         <TableCell className="text-white">{labour.jobType}</TableCell>
                         <TableCell>
@@ -225,10 +224,12 @@ export function PricingManagement() {
                         </TableCell>
                         <TableCell className="text-white">{labour.city}</TableCell>
                         <TableCell className="text-white">
-                          {editingItem === `labour-${labour.id}` ? (
+                          {editingItem === `labour-costs-${labour.id}` ? (
                             <Input
-                              value={editValues[`labour-${labour.id}`] || ''}
-                              onChange={(e) => setEditValues(prev => ({ ...prev, [`labour-${labour.id}`]: e.target.value }))}
+                              value={editValues[`labour-costs-${labour.id}`] || ''}
+                              onChange={(e) =>
+                                setEditValues((prev) => ({ ...prev, [`labour-costs-${labour.id}`]: e.target.value }))
+                              }
                               className="w-24 bg-slate-800/50 border-slate-600 text-white"
                               placeholder="0.00"
                             />
@@ -238,7 +239,7 @@ export function PricingManagement() {
                         </TableCell>
                         <TableCell>
                           <div className="flex items-center space-x-2">
-                            {editingItem === `labour-${labour.id}` ? (
+                            {editingItem === `labour-costs-${labour.id}` ? (
                               <>
                                 <Button
                                   size="sm"
@@ -259,7 +260,7 @@ export function PricingManagement() {
                             ) : (
                               <Button
                                 size="sm"
-                                onClick={() => startEdit(`labour-${labour.id}`, (labour.price / 100).toString())}
+                                onClick={() => startEdit('labour-costs', labour.id, (labour.price / 100).toString())}
                                 variant="outline"
                                 className="border-slate-600 text-slate-300 hover:bg-slate-800"
                               >
@@ -281,9 +282,7 @@ export function PricingManagement() {
           <Card className="glass-card">
             <CardHeader>
               <CardTitle className="text-white">Sundries & Extras</CardTitle>
-              <CardDescription className="text-slate-300">
-                Manage pricing for additional items and services
-              </CardDescription>
+              <CardDescription className="text-slate-300">Manage pricing for additional items and services</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="overflow-x-auto">
@@ -297,7 +296,7 @@ export function PricingManagement() {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {sundries?.map((sundry: any) => (
+                    {Array.isArray(sundries) && sundries.map((sundry: any) => (
                       <TableRow key={sundry.id} className="border-slate-600">
                         <TableCell className="text-white">{sundry.itemName}</TableCell>
                         <TableCell>
@@ -309,7 +308,9 @@ export function PricingManagement() {
                           {editingItem === `sundries-${sundry.id}` ? (
                             <Input
                               value={editValues[`sundries-${sundry.id}`] || ''}
-                              onChange={(e) => setEditValues(prev => ({ ...prev, [`sundries-${sundry.id}`]: e.target.value }))}
+                              onChange={(e) =>
+                                setEditValues((prev) => ({ ...prev, [`sundries-${sundry.id}`]: e.target.value }))
+                              }
                               className="w-24 bg-slate-800/50 border-slate-600 text-white"
                               placeholder="0.00"
                             />
@@ -340,7 +341,7 @@ export function PricingManagement() {
                             ) : (
                               <Button
                                 size="sm"
-                                onClick={() => startEdit(`sundries-${sundry.id}`, (sundry.price / 100).toString())}
+                                onClick={() => startEdit('sundries', sundry.id, (sundry.price / 100).toString())}
                                 variant="outline"
                                 className="border-slate-600 text-slate-300 hover:bg-slate-800"
                               >
