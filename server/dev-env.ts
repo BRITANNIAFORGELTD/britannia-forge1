@@ -5,14 +5,22 @@ import 'dotenv/config';
 // Only set fallbacks when not in production:
 if (process.env.NODE_ENV !== 'production') {
   // Keep port stable for the admin UI
-  if (!process.env.PORT) process.env.PORT = '5001';
+  if (!process.env.PORT) process.env.PORT = '5050';
 
-  // If DATABASE_URL isn't provided, fall back to the known-good pooler URL
-  // (this mirrors the old dev-server.cjs behavior — **no secrets printed**).
+  // Default frontend URL for local development
+  if (!process.env.FRONTEND_URL) {
+    process.env.FRONTEND_URL = 'http://localhost:5050';
+  }
+
+  // Use Supabase only; no Neon fallback
   if (!process.env.DATABASE_URL) {
-    // Prefer an alternate var if present (some setups used this)
     const supa = process.env.SUPABASE_DATABASE_URL;
-    process.env.DATABASE_URL = supa || 'postgresql://aws-0-eu-west-2.pooler.supabase.com:5432/postgres';
+    if (supa) process.env.DATABASE_URL = supa;
+  }
+
+  // Avoid TLS verification issues with Supabase pooler certificates in local dev
+  if (!process.env.NODE_TLS_REJECT_UNAUTHORIZED) {
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
   }
 }
 

@@ -108,7 +108,7 @@ export default function SecureAdminLogin() {
                 <Input
                   id="email"
                   type="email"
-                  placeholder="admin@britanniaforge.co.uk"
+                    placeholder="admin@yourdomain.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="pl-10 bg-slate-800/50 border-slate-600 text-white placeholder-slate-400"
