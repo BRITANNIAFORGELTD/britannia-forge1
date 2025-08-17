@@ -1,3 +1,4 @@
 # local env
 .env*
 attached_assets/
+!.env.example
