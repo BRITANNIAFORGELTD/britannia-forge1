@@ -1,9 +1,31 @@
 import { Router } from 'express';
+import type { Request, Response, NextFunction } from 'express';
 import { AuthService } from './auth';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 import { body, validationResult } from 'express-validator';
 import { z } from 'zod';
+import { supa } from './lib/supabase';
 
 const router = Router();
+
+type Claims = { sub: number | string; email: string };
+
+function authenticateAdmin(req: Request, res: Response, next: NextFunction) {
+  try {
+    const auth = req.header('Authorization') || '';
+    const token = auth.startsWith('Bearer ') ? auth.slice(7) : '';
+    if (!token) return res.status(401).json({ error: 'Access token required' });
+
+    const secret = process.env.JWT_SECRET || '';
+    const claims = jwt.verify(token, secret) as Claims;
+
+    (req as any).admin = { id: Number(claims.sub), email: String(claims.email || '') };
+    return next();
+  } catch {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+}
 
 // Validation schemas
 const registerSchema = z.object({
@@ -142,49 +164,59 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// Login endpoint with admin bypass
+// Login endpoint — Supabase REST (admin_users preferred, fallback to users.password)
 router.post('/login', async (req, res) => {
   try {
-    const validatedData = loginSchema.parse(req.body);
-    
-    // Emergency admin bypass for database issues - MUST BE FIRST
-    if (validatedData.email === 'admin@britanniaforge.co.uk' && validatedData.password === 'BritanniaAdmin2025!') {
-      console.log('🔑 ADMIN BYPASS ACTIVATED - Direct access granted');
-      
-      const adminUser = {
-        id: 1,
-        fullName: 'System Administrator',
-        email: 'admin@britanniaforge.co.uk',
-        userType: 'admin',
-        emailVerified: true
-      };
-      
-      const token = AuthService.generateToken(adminUser as any);
-      
-      return res.json({
-        success: true,
-        message: 'Admin login successful',
-        user: adminUser,
-        token,
-        requiresVerification: false
-      });
+    const { email, password } = loginSchema.parse(req.body);
+
+    // admin_users first
+    const admin = await supa
+      .from('admin_users')
+      .select('id, email, password_hash')
+      .eq('email', email.toLowerCase())
+      .maybeSingle();
+
+    let row: any | null = null;
+    if (admin.error && admin.error.code !== 'PGRST116') {
+      // Config/SDK error
+      console.error('[login] supabase error', admin.error);
+      return res.status(500).json({ error: 'Server error' });
     }
-    
-    // Regular login flow (only if not admin)
-    const { user, token, requiresVerification } = await AuthService.login(validatedData.email, validatedData.password);
-    
-    res.json({
+    if (admin.data) row = admin.data;
+
+    // fallback to users.password if admin_users not found or no row
+    if (!row) {
+      const fallback = await supa
+        .from('users')
+        .select('id, email, password')
+        .eq('email', email.toLowerCase())
+        .maybeSingle();
+      if (fallback.error && fallback.error.code !== 'PGRST116') {
+        console.error('[login] supabase users error', fallback.error);
+        return res.status(500).json({ error: 'Server error' });
+      }
+      if (fallback.data) {
+        row = { id: (fallback.data as any).id, email: (fallback.data as any).email, password_hash: (fallback.data as any).password };
+      }
+    }
+
+    if (!row) return res.status(401).json({ error: 'Invalid credentials' });
+
+    const ok = await bcrypt.compare(password, row.password_hash);
+    if (!ok) return res.status(401).json({ error: 'Invalid credentials' });
+
+    const token = jwt.sign(
+      { sub: row.id, email: row.email },
+      process.env.JWT_SECRET || 'change-me',
+      { expiresIn: '12h' }
+    );
+
+    return res.json({
       success: true,
-      message: requiresVerification ? 'Please verify your email to continue' : 'Login successful',
-      user: {
-        id: user.id,
-        fullName: user.fullName,
-        email: user.email,
-        userType: user.userType,
-        emailVerified: user.emailVerified,
-      },
+      message: 'Login successful',
+      user: { id: row.id, email: row.email },
       token,
-      requiresVerification: requiresVerification || false
+      requiresVerification: false,
     });
   } catch (error: any) {
     if (error.name === 'ZodError') {
@@ -193,10 +225,8 @@ router.post('/login', async (req, res) => {
         details: error.errors 
       });
     }
-    
-    res.status(401).json({ 
-      error: error.message || 'Login failed' 
-    });
+    console.error('[login] unexpected', error);
+    return res.status(500).json({ error: 'Server error' });
   }
 });
 
@@ -307,39 +337,13 @@ router.post('/reset-password', async (req, res) => {
 });
 
 // Get current user endpoint (protected)
-router.get('/me', authenticateToken, async (req, res) => {
-  try {
-    const { storage } = await import('./storage');
-    const user = await storage.getUser(req.user.id);
-    
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-    
-    res.json({
-      user: {
-        id: user.id,
-        fullName: user.fullName,
-        email: user.email,
-        userType: user.userType,
-        emailVerified: user.emailVerified,
-        phone: user.phone,
-        address: user.address,
-        city: user.city,
-        postcode: user.postcode,
-      }
-    });
-  } catch (error: any) {
-    res.status(500).json({ 
-      error: 'Failed to fetch user data' 
-    });
-  }
+router.get('/me', authenticateAdmin, (req, res) => {
+  const a = (req as any).admin;
+  return res.json({ id: a.id, email: a.email });
 });
 
 // Logout endpoint
 router.post('/logout', authenticateToken, async (req, res) => {
-  // In a stateless JWT system, logout is handled client-side
-  // But we can add token blacklisting here if needed
   res.json({
     success: true,
     message: 'Logged out successfully'

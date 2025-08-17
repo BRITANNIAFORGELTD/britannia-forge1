@@ -69,18 +69,13 @@ export default function AdminDashboard() {
   const handleLogout = async () => {
     try {
       await apiRequest('POST', '/api/auth/logout');
-      // Clear localStorage
-      localStorage.removeItem('auth_token');
-      localStorage.removeItem('user_data');
-      // Redirect to secure admin login
-      window.location.href = '/britannia1074/admin/login';
-    } catch (error) {
-      console.error('Logout error:', error);
-      // Force logout anyway
-      localStorage.removeItem('auth_token');
-      localStorage.removeItem('user_data');
-      window.location.href = '/britannia1074/admin/login';
-    }
+    } catch {}
+    // Clear localStorage tokens
+    localStorage.removeItem('auth_token');
+    localStorage.removeItem('user_data');
+    localStorage.removeItem('adminToken');
+    // Redirect to secure admin login
+    window.location.href = '/britannia1074/admin/login';
   };
 
   return (

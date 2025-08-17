@@ -9,6 +9,7 @@ import crypto from 'crypto';
 import { v4 as uuidv4 } from 'uuid';
 import authRoutes, { authenticateToken, requireEmailVerification, requireAdmin, requireEngineer, requireCustomer, requireEditor, requireAdminOrEditor } from './auth-routes';
 import adminRoutes from './admin-routes';
+import boilersRouter from './routes/boilers';
 import emergencyRoutes from './emergency-pricing-api';
 
 // Initialize SendGrid
@@ -30,6 +31,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.use('/api/auth', authRoutes);
   
   // Admin routes - Dynamic pricing management
+  // Mount boilers router first so it handles /api/admin/boilers before the broader /api/admin router
+  app.use('/api/admin/boilers', boilersRouter);
   app.use('/api/admin', adminRoutes);
   
   // Emergency routes - CSV-based pricing (bypasses database)
@@ -347,23 +350,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json(activity);
   });
 
-  // Admin pricing management - Editors can view and edit, admins can delete
-  app.get("/api/admin/boilers", authenticateToken, requireAdminOrEditor, async (req, res) => {
-    try {
-      const boilers = await storage.getBoilers();
-      res.json(boilers);
-    } catch (error) {
-      res.status(500).json({ message: "Failed to fetch boilers" });
-    }
-  });
-
-  app.put("/api/admin/boilers/:id", authenticateToken, requireAdminOrEditor, async (req, res) => {
-    try {
-      res.json({ success: true });
-    } catch (error) {
-      res.status(500).json({ message: "Failed to update boiler" });
-    }
-  });
+  // Admin pricing management - handled by sub-router mounted at /api/admin/boilers
 
   app.get("/api/admin/labour-costs", authenticateToken, requireAdminOrEditor, async (req, res) => {
     try {

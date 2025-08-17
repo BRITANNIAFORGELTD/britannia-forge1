@@ -1,4 +1,5 @@
 import { QueryClient, QueryFunction } from "@tanstack/react-query";
+import { ADMIN_TOKEN_KEY } from './auth';
 
 async function throwIfResNotOk(res: Response) {
   if (!res.ok) {
@@ -12,9 +13,14 @@ export async function apiRequest(
   url: string,
   data?: unknown | undefined,
 ): Promise<Response> {
+  const adminToken = localStorage.getItem(ADMIN_TOKEN_KEY);
+  const isAdminApi = url.startsWith('/api/admin') || url.startsWith('/api/auth');
+  const headers: Record<string, string> = data ? { "Content-Type": "application/json" } : {};
+  if (isAdminApi && adminToken) headers['Authorization'] = `Bearer ${adminToken}`;
+
   const res = await fetch(url, {
     method,
-    headers: data ? { "Content-Type": "application/json" } : {},
+    headers,
     body: data ? JSON.stringify(data) : undefined,
     credentials: "include",
   });
@@ -29,16 +35,37 @@ export const getQueryFn: <T>(options: {
 }) => QueryFunction<T> =
   ({ on401: unauthorizedBehavior }) =>
   async ({ queryKey }) => {
-    const res = await fetch(queryKey.join("/") as string, {
+    const url = queryKey.join("/") as string;
+    const adminToken = localStorage.getItem(ADMIN_TOKEN_KEY);
+    const isAdminApi = url.startsWith('/api/admin') || url.startsWith('/api/auth');
+    const headers: Record<string, string> = {};
+    if (isAdminApi && adminToken) headers['Authorization'] = `Bearer ${adminToken}`;
+
+    const res = await fetch(url, {
       credentials: "include",
+      headers,
     });
 
     if (unauthorizedBehavior === "returnNull" && res.status === 401) {
       return null;
     }
 
-    await throwIfResNotOk(res);
-    return await res.json();
+    let json: any = null;
+    try {
+      json = await res.json();
+    } catch {}
+
+    if (json && typeof json === 'object' && 'success' in json && 'data' in json) {
+      if ((json as any).success) return (json as any).data;
+      const message = (json as any).error || `Request failed with ${res.status}`;
+      throw new Error(message);
+    }
+
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}`);
+    }
+
+    return json;
   };
 
 export const queryClient = new QueryClient({

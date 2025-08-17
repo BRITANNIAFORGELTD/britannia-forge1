@@ -11,6 +11,11 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiRequest } from '@/lib/queryClient';
 import { useToast } from '@/hooks/use-toast';
 
+const formatGBP = (v: unknown) => {
+  const n = typeof v === 'number' ? v : parseFloat(String(v).replace(/[£,\s]/g, '')) || 0;
+  return new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(n);
+};
+
 export function PricingManagement() {
   const [editingItem, setEditingItem] = useState<string | null>(null);
   const [editValues, setEditValues] = useState<{ [key: string]: string }>({});
@@ -32,42 +37,71 @@ export function PricingManagement() {
     enabled: true,
   });
 
+  const updateBoiler = async (id: string, payload: any) => {
+    const res = await fetch(`/api/admin/boilers/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      credentials: 'include',
+    });
+    const json = await res.json();
+    if (!res.ok || json?.success === false) throw new Error(json?.error || `Failed with ${res.status}`);
+    return json.data ?? json;
+  };
+
   const updateMutation = useMutation({
-    mutationFn: async ({ type, id, data }: { type: string; id: string; data: any }) => {
-      return apiRequest('PUT', `/api/admin/${type}/${id}`, data);
-    },
+    mutationFn: async ({ id, values }: { id: string; values: any }) => updateBoiler(id, values),
     onSuccess: () => {
-      toast({
-        title: 'Update successful',
-        description: 'Pricing has been updated',
-      });
-      queryClient.invalidateQueries({ queryKey: ['/api/admin/'] });
+      toast({ title: 'Update successful', description: 'Boiler updated' });
+      queryClient.invalidateQueries({ queryKey: ['/api/admin/boilers'] });
       setEditingItem(null);
       setEditValues({});
     },
     onError: () => {
-      toast({
-        title: 'Update failed',
-        description: 'Failed to update pricing',
-        variant: 'destructive',
-      });
+      toast({ title: 'Update failed', description: 'Failed to update boiler', variant: 'destructive' });
     },
   });
 
-  const startEdit = (itemId: string, currentValue: string) => {
-    setEditingItem(itemId);
-    setEditValues({ [itemId]: currentValue });
+  const startEdit = (boiler: any) => {
+    const rowKey = `boilers-${boiler.id}`;
+    setEditingItem(rowKey);
+    setEditValues({
+      [`${rowKey}-brand`]: boiler.brand ?? '',
+      [`${rowKey}-model`]: boiler.model ?? '',
+      [`${rowKey}-type`]: boiler.type ?? '',
+      [`${rowKey}-kw`]: boiler.kw != null ? String(boiler.kw) : '',
+      [`${rowKey}-dhw_output_kw`]: boiler.dhw_output_kw != null ? String(boiler.dhw_output_kw) : '',
+      [`${rowKey}-flow_lpm`]: boiler.flow_lpm != null ? String(boiler.flow_lpm) : '',
+      [`${rowKey}-sku`]: boiler.sku ?? '',
+      [`${rowKey}-price`]: boiler.price != null ? String(boiler.price) : '',
+      [`${rowKey}-warranty_years`]: (boiler.warranty_years ?? boiler.warrantyYears) != null ? String(boiler.warranty_years ?? boiler.warrantyYears) : '',
+    });
   };
 
-  const saveEdit = async (type: string, id: string) => {
-    const value = editValues[`${type}-${id}`];
-    if (!value) return;
+  const saveEdit = async (_type: string, id: string) => {
+    const rowKey = `boilers-${id}`;
+    const get = (field: string) => editValues[`${rowKey}-${field}`];
+    const parseNum = (v: string | undefined) => {
+      if (v == null) return undefined;
+      const n = Number(String(v).replace(/[£,\s]/g, ''));
+      return Number.isFinite(n) ? n : undefined;
+    };
+    const payload: Record<string, any> = {};
+    const maybeSet = (key: string, value: any) => {
+      if (value === undefined) return;
+      payload[key] = value === '' ? null : value;
+    };
+    maybeSet('brand', get('brand'));
+    maybeSet('model', get('model'));
+    maybeSet('type', get('type'));
+    maybeSet('kw', parseNum(get('kw')));
+    maybeSet('dhw_output_kw', parseNum(get('dhw_output_kw')));
+    maybeSet('flow_lpm', parseNum(get('flow_lpm')));
+    maybeSet('sku', get('sku'));
+    maybeSet('price', parseNum(get('price')));
+    maybeSet('warranty_years', parseNum(get('warranty_years')));
 
-    updateMutation.mutate({
-      type,
-      id,
-      data: type === 'boilers' ? { supplyPrice: parseFloat(value) * 100 } : { price: parseFloat(value) * 100 }
-    });
+    updateMutation.mutate({ id, values: payload });
   };
 
   const cancelEdit = () => {
@@ -123,6 +157,8 @@ export function PricingManagement() {
                       <TableHead className="text-slate-300">Type</TableHead>
                       <TableHead className="text-slate-300">Tier</TableHead>
                       <TableHead className="text-slate-300">kW</TableHead>
+                      <TableHead className="text-slate-300">DHW kW</TableHead>
+                      <TableHead className="text-slate-300">Flow LPM</TableHead>
                       <TableHead className="text-slate-300">Supply Price</TableHead>
                       <TableHead className="text-slate-300">Warranty</TableHead>
                       <TableHead className="text-slate-300">Actions</TableHead>
@@ -131,28 +167,107 @@ export function PricingManagement() {
                   <TableBody>
                     {boilers?.map((boiler: any) => (
                       <TableRow key={boiler.id} className="border-slate-600">
-                        <TableCell className="text-white">{boiler.make}</TableCell>
-                        <TableCell className="text-white">{boiler.model}</TableCell>
-                        <TableCell className="text-white">{boiler.boilerType}</TableCell>
-                        <TableCell>
-                          <Badge variant="outline" className="text-slate-300">
-                            {boiler.tier}
-                          </Badge>
-                        </TableCell>
-                        <TableCell className="text-white">{boiler.kw}kW</TableCell>
                         <TableCell className="text-white">
                           {editingItem === `boilers-${boiler.id}` ? (
                             <Input
-                              value={editValues[`boilers-${boiler.id}`] || ''}
-                              onChange={(e) => setEditValues(prev => ({ ...prev, [`boilers-${boiler.id}`]: e.target.value }))}
+                              value={editValues[`boilers-${boiler.id}-brand`] || ''}
+                              onChange={(e) => setEditValues(prev => ({ ...prev, [`boilers-${boiler.id}-brand`]: e.target.value }))}
+                              className="w-40 bg-slate-800/50 border-slate-600 text-white"
+                              placeholder="Brand"
+                            />
+                          ) : (
+                            boiler.brand
+                          )}
+                        </TableCell>
+                        <TableCell className="text-white">
+                          {editingItem === `boilers-${boiler.id}` ? (
+                            <Input
+                              value={editValues[`boilers-${boiler.id}-model`] || ''}
+                              onChange={(e) => setEditValues(prev => ({ ...prev, [`boilers-${boiler.id}-model`]: e.target.value }))}
+                              className="w-48 bg-slate-800/50 border-slate-600 text-white"
+                              placeholder="Model"
+                            />
+                          ) : (
+                            boiler.model
+                          )}
+                        </TableCell>
+                        <TableCell className="text-white">
+                          {editingItem === `boilers-${boiler.id}` ? (
+                            <Input
+                              value={editValues[`boilers-${boiler.id}-type`] || ''}
+                              onChange={(e) => setEditValues(prev => ({ ...prev, [`boilers-${boiler.id}-type`]: e.target.value }))}
+                              className="w-28 bg-slate-800/50 border-slate-600 text-white"
+                              placeholder="combi/system"
+                            />
+                          ) : (
+                            boiler.type
+                          )}
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant="outline" className="text-slate-300">
+                            {boiler.tier ?? '—'}
+                          </Badge>
+                        </TableCell>
+                        <TableCell className="text-white whitespace-nowrap">
+                          {editingItem === `boilers-${boiler.id}` ? (
+                            <Input
+                              value={editValues[`boilers-${boiler.id}-kw`] || ''}
+                              onChange={(e) => setEditValues(prev => ({ ...prev, [`boilers-${boiler.id}-kw`]: e.target.value }))}
+                              className="w-20 bg-slate-800/50 border-slate-600 text-white"
+                              placeholder="kW"
+                            />
+                          ) : (
+                            boiler.kw != null ? `${boiler.kw}kW` : '—'
+                          )}
+                        </TableCell>
+                        <TableCell className="text-white whitespace-nowrap">
+                          {editingItem === `boilers-${boiler.id}` ? (
+                            <Input
+                              value={editValues[`boilers-${boiler.id}-dhw_output_kw`] || ''}
+                              onChange={(e) => setEditValues(prev => ({ ...prev, [`boilers-${boiler.id}-dhw_output_kw`]: e.target.value }))}
+                              className="w-24 bg-slate-800/50 border-slate-600 text-white"
+                              placeholder="DHW kW"
+                            />
+                          ) : (
+                            boiler.dhw_output_kw != null ? `${boiler.dhw_output_kw}kW` : '—'
+                          )}
+                        </TableCell>
+                        <TableCell className="text-white whitespace-nowrap">
+                          {editingItem === `boilers-${boiler.id}` ? (
+                            <Input
+                              value={editValues[`boilers-${boiler.id}-flow_lpm`] || ''}
+                              onChange={(e) => setEditValues(prev => ({ ...prev, [`boilers-${boiler.id}-flow_lpm`]: e.target.value }))}
+                              className="w-24 bg-slate-800/50 border-slate-600 text-white"
+                              placeholder="LPM"
+                            />
+                          ) : (
+                            boiler.flow_lpm != null ? `${boiler.flow_lpm} LPM` : '—'
+                          )}
+                        </TableCell>
+                        <TableCell className="text-white text-right whitespace-nowrap">
+                          {editingItem === `boilers-${boiler.id}` ? (
+                            <Input
+                              value={editValues[`boilers-${boiler.id}-price`] || ''}
+                              onChange={(e) => setEditValues(prev => ({ ...prev, [`boilers-${boiler.id}-price`]: e.target.value }))}
                               className="w-24 bg-slate-800/50 border-slate-600 text-white"
                               placeholder="0.00"
                             />
                           ) : (
-                            formatPrice(boiler.supplyPrice)
+                            formatGBP(boiler.price)
                           )}
                         </TableCell>
-                        <TableCell className="text-white">{boiler.warrantyYears} years</TableCell>
+                        <TableCell className="text-white">
+                          {editingItem === `boilers-${boiler.id}` ? (
+                            <Input
+                              value={editValues[`boilers-${boiler.id}-warranty_years`] || ''}
+                              onChange={(e) => setEditValues(prev => ({ ...prev, [`boilers-${boiler.id}-warranty_years`]: e.target.value }))}
+                              className="w-20 bg-slate-800/50 border-slate-600 text-white"
+                              placeholder="years"
+                            />
+                          ) : (
+                            (boiler.warranty_years ?? boiler.warrantyYears) + ' years'
+                          )}
+                        </TableCell>
                         <TableCell>
                           <div className="flex items-center space-x-2">
                             {editingItem === `boilers-${boiler.id}` ? (
@@ -176,7 +291,7 @@ export function PricingManagement() {
                             ) : (
                               <Button
                                 size="sm"
-                                onClick={() => startEdit(`boilers-${boiler.id}`, (boiler.supplyPrice / 100).toString())}
+                                onClick={() => startEdit(boiler)}
                                 variant="outline"
                                 className="border-slate-600 text-slate-300 hover:bg-slate-800"
                               >
@@ -259,7 +374,7 @@ export function PricingManagement() {
                             ) : (
                               <Button
                                 size="sm"
-                                onClick={() => startEdit(`labour-${labour.id}`, (labour.price / 100).toString())}
+                                onClick={() => startEdit(`labour-${labour.id}`, formatPrice(labour.price))}
                                 variant="outline"
                                 className="border-slate-600 text-slate-300 hover:bg-slate-800"
                               >
@@ -340,7 +455,7 @@ export function PricingManagement() {
                             ) : (
                               <Button
                                 size="sm"
-                                onClick={() => startEdit(`sundries-${sundry.id}`, (sundry.price / 100).toString())}
+                                onClick={() => startEdit(`sundries-${sundry.id}`, formatPrice(sundry.price))}
                                 variant="outline"
                                 className="border-slate-600 text-slate-300 hover:bg-slate-800"
                               >
