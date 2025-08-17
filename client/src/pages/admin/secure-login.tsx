@@ -8,6 +8,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Lock, Shield, Eye, EyeOff } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { apiRequest } from '@/lib/queryClient';
+import { ADMIN_TOKEN_KEY } from '@/lib/auth';
 import { SEOHead } from '@/components/seo/seo-head';
 
 export default function SecureAdminLogin() {
@@ -41,18 +42,9 @@ export default function SecureAdminLogin() {
         return;
       }
 
-      // Check if user is admin
-      if (data.user.userType !== 'admin') {
-        setError('Admin access required');
-        setLoading(false);
-        return;
-      }
-
-      // Check if email verification is required
-      if (data.requiresVerification) {
-        setError('Email verification required for admin access');
-        setLoading(false);
-        return;
+      // Save admin token
+      if (data.token) {
+        localStorage.setItem(ADMIN_TOKEN_KEY, data.token);
       }
 
       // Login successful
@@ -108,7 +100,7 @@ export default function SecureAdminLogin() {
                 <Input
                   id="email"
                   type="email"
-                  placeholder="admin@britanniaforge.co.uk"
+                    placeholder="admin@yourdomain.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="pl-10 bg-slate-800/50 border-slate-600 text-white placeholder-slate-400"

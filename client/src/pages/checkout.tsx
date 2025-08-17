@@ -24,8 +24,9 @@ import {
   Wrench
 } from 'lucide-react';
 
-// Load Stripe
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY || '');
+// Load Stripe (guard in dev when no key provided)
+const publishableKey = import.meta.env.VITE_STRIPE_PUBLIC_KEY as string | undefined;
+const stripePromise = publishableKey ? loadStripe(publishableKey) : null;
 
 interface CheckoutFormProps {
   amount: number;
@@ -182,6 +183,21 @@ export default function Checkout() {
     setError(errorMessage);
   };
 
+  if (!publishableKey) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-britannia-gray to-slate-200">
+        <Header />
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <GlassCard className="text-center py-12">
+            <h2 className="text-2xl font-bold text-britannia-dark mb-2">Stripe disabled in development</h2>
+            <p className="text-gray-600">Provide VITE_STRIPE_PUBLIC_KEY in .env to enable checkout UI.</p>
+          </GlassCard>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-britannia-gray to-slate-200">
@@ -208,7 +224,7 @@ export default function Checkout() {
             <h2 className="text-2xl font-bold text-britannia-dark mb-2">Payment Error</h2>
             <p className="text-gray-600 mb-6">{error}</p>
             <div className="flex justify-center space-x-4">
-              <Button variant="outline" onClick={() => setLocation('/')}>
+              <Button variant="outline" onClick={() => setLocation('/') }>
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back to Quote
               </Button>
@@ -288,7 +304,7 @@ export default function Checkout() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                {clientSecret && (
+                {clientSecret && stripePromise && (
                   <Elements stripe={stripePromise} options={{ clientSecret }}>
                     <CheckoutForm 
                       amount={paymentAmount}
@@ -296,6 +312,9 @@ export default function Checkout() {
                       onError={handlePaymentError}
                     />
                   </Elements>
+                )}
+                {!stripePromise && (
+                  <div className="text-sm text-gray-600">Stripe is disabled in development (no publishable key set).</div>
                 )}
               </CardContent>
             </GlassCard>

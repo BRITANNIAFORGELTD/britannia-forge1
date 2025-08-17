@@ -4,14 +4,15 @@
  * Usage: npm run create-admin
  */
 
-import { createHash } from 'crypto';
 import { db } from './db';
 import { users } from '../shared/schema';
 import { eq } from 'drizzle-orm';
+import bcrypt from 'bcrypt';
 
-// Helper function to hash passwords
-function hashPassword(password: string): string {
-  return createHash('sha256').update(password).digest('hex');
+// Helper to hash passwords with bcrypt
+async function hashPassword(password: string): Promise<string> {
+  const saltRounds = 12;
+  return await bcrypt.hash(password, saltRounds);
 }
 
 // Helper function to generate secure random password
@@ -26,7 +27,7 @@ function generateSecurePassword(length: number = 16): string {
 
 async function createAdminUser() {
   try {
-    const adminEmail = process.env.ADMIN_EMAIL || 'admin@britanniaforge.co.uk';
+    const adminEmail = process.env.ADMIN_EMAIL || 'admin@yourdomain.com';
     const adminPassword = process.env.ADMIN_PASSWORD || generateSecurePassword();
     
     // Check if admin user already exists
@@ -41,7 +42,7 @@ async function createAdminUser() {
     const adminUser = await db.insert(users).values({
       fullName: 'System Administrator',
       email: adminEmail,
-      password: hashPassword(adminPassword),
+      password: await hashPassword(adminPassword),
       userType: 'admin',
       emailVerified: true,
       emailVerificationCode: null,
@@ -53,7 +54,7 @@ async function createAdminUser() {
     console.log('✅ Admin user created successfully!');
     console.log('📧 Email:', adminEmail);
     console.log('🔑 Password:', adminPassword);
-    console.log('🔐 Secure Admin URL: https://britanniaforge.co.uk/britannia1074/admin/login');
+    console.log('🔐 Secure Admin URL: http://localhost:5050/admin/login');
     console.log('');
     console.log('⚠️  IMPORTANT: Store these credentials securely and change the password after first login!');
     console.log('');
@@ -64,15 +65,21 @@ async function createAdminUser() {
   }
 }
 
-// Run the script
-if (require.main === module) {
-  createAdminUser().then(() => {
-    console.log('Admin user creation completed');
-    process.exit(0);
-  }).catch((error) => {
-    console.error('Error:', error);
-    process.exit(1);
-  });
+// Run the script in ESM context when executed directly
+import { fileURLToPath } from 'url';
+import path from 'path';
+const isMain = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+
+if (isMain) {
+  createAdminUser()
+    .then(() => {
+      console.log('Admin user creation completed');
+      process.exit(0);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+      process.exit(1);
+    });
 }
 
 export { createAdminUser };

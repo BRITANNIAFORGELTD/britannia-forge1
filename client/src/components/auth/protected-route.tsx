@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { useLocation } from 'wouter';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Shield, Lock, AlertCircle } from 'lucide-react';
+import { ADMIN_TOKEN_KEY } from '@/lib/auth';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -24,8 +25,42 @@ export function ProtectedRoute({
   const { user, isLoading, isAuthenticated } = useAuth();
   const [, setLocation] = useLocation();
 
-  // Check for emergency admin access
-  const emergencyAdminToken = localStorage.getItem('adminToken');
+  // Admin token check: verify with /api/admin/me if present
+  const [adminChecked, setAdminChecked] = useState(false);
+  useEffect(() => {
+    const adminToken = localStorage.getItem(ADMIN_TOKEN_KEY);
+    const isAdminContext = requireRole === 'admin' || requireAdminOrEditor;
+    if (!isAdminContext) {
+      setAdminChecked(true);
+      return;
+    }
+    if (!adminToken) {
+      setAdminChecked(true);
+      return;
+    }
+    (async () => {
+      try {
+        const res = await fetch('/api/admin/me', {
+          headers: { Authorization: `Bearer ${adminToken}` },
+          credentials: 'include',
+        });
+        if (res.status === 200) {
+          setAdminChecked(true);
+        } else {
+          localStorage.removeItem('adminToken');
+          setAdminChecked(true);
+          setLocation('/britannia1074/admin/login');
+        }
+      } catch {
+        localStorage.removeItem('adminToken');
+        setAdminChecked(true);
+        setLocation('/britannia1074/admin/login');
+      }
+    })();
+  }, [requireRole, requireAdminOrEditor, setLocation]);
+
+  // Check for emergency admin access (legacy)
+  const emergencyAdminToken = localStorage.getItem(ADMIN_TOKEN_KEY);
   const emergencyAdminUser = localStorage.getItem('adminUser');
   
   if (emergencyAdminToken && emergencyAdminUser) {
@@ -36,7 +71,7 @@ export function ProtectedRoute({
   }
 
   // Show loading state while checking auth
-  if (isLoading) {
+  if (isLoading || !adminChecked) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
@@ -85,9 +120,6 @@ export function ProtectedRoute({
             </CardDescription>
           </CardHeader>
           <CardContent className="text-center">
-            <p className="text-gray-600 mb-4">
-              Check your email for the verification link
-            </p>
             <button
               onClick={() => setLocation('/login')}
               className="bg-orange-600 text-white px-6 py-2 rounded-lg hover:bg-orange-700 transition-colors"
@@ -132,7 +164,6 @@ export function ProtectedRoute({
   return <>{children}</>;
 }
 
-// Convenience components for specific roles
 export function AdminRoute({ children }: { children: React.ReactNode }) {
   return (
     <ProtectedRoute 

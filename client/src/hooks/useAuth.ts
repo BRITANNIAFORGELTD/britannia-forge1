@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { apiRequest } from '@/lib/queryClient';
+import { ADMIN_TOKEN_KEY } from '@/lib/auth';
 
 export interface User {
   id: number;
@@ -19,7 +20,7 @@ export function useAuth() {
   const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
-    const storedToken = localStorage.getItem('auth_token');
+    const storedToken = localStorage.getItem(ADMIN_TOKEN_KEY);
     if (storedToken) {
       setToken(storedToken);
       fetchUser(storedToken);
@@ -38,16 +39,23 @@ export function useAuth() {
       
       if (response.ok) {
         const data = await response.json();
-        setUser(data.user);
+        // /api/auth/me returns { id, email }
+        setUser({
+          id: data.id,
+          email: data.email,
+          fullName: '',
+          userType: 'admin',
+          emailVerified: true,
+        } as any);
       } else {
         // Token is invalid, remove it
-        localStorage.removeItem('auth_token');
+        localStorage.removeItem(ADMIN_TOKEN_KEY);
         localStorage.removeItem('user_data');
         setToken(null);
       }
     } catch (error) {
       // Token is invalid, remove it
-      localStorage.removeItem('auth_token');
+      localStorage.removeItem(ADMIN_TOKEN_KEY);
       localStorage.removeItem('user_data');
       setToken(null);
     } finally {
@@ -58,21 +66,21 @@ export function useAuth() {
   const login = (userData: User, authToken: string) => {
     setUser(userData);
     setToken(authToken);
-    localStorage.setItem('auth_token', authToken);
+    localStorage.setItem(ADMIN_TOKEN_KEY, authToken);
     localStorage.setItem('user_data', JSON.stringify(userData));
   };
 
   const logout = () => {
     setUser(null);
     setToken(null);
-    localStorage.removeItem('auth_token');
+    localStorage.removeItem(ADMIN_TOKEN_KEY);
     localStorage.removeItem('user_data');
   };
 
   return {
     user,
     isLoading,
-    isAuthenticated: !!user && !!token && user.emailVerified,
+    isAuthenticated: !!token, // trust JWT validation for admin gating
     login,
     logout,
     token,
