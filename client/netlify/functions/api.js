@@ -10,6 +10,12 @@ const { createClient } = require('@supabase/supabase-js');
 function getSupabase() {
   const url = process.env.SUPABASE_URL;
   const serviceRole = process.env.SUPABASE_SERVICE_ROLE || process.env.SUPABASE_SERVICE_ROLE_KEY;
+  // Temporary structured diagnostics (no secrets)
+  console.log(JSON.stringify({
+    fn: 'getSupabase',
+    hasUrl: Boolean(url),
+    hasServiceRole: Boolean(serviceRole),
+  }));
   if (!url || !serviceRole) throw new Error('Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE');
   return createClient(url, serviceRole, { auth: { persistSession: false, autoRefreshToken: false } });
 }
@@ -78,11 +84,19 @@ function setJwtCookie(token) {
 
 exports.handler = async (event) => {
   try {
+    // Basic request diagnostics (no PII)
+    console.log(JSON.stringify({
+      fn: 'api',
+      node: process.version,
+      method: event?.httpMethod,
+      rawPath: event?.path,
+    }));
     if (event.httpMethod === 'OPTIONS') {
       return { statusCode: 204, headers: { ...corsHeaders() } };
     }
 
     const path = getOriginalPath(event);
+    console.log(JSON.stringify({ fn: 'api', derivedPath: path }));
     const supabase = getSupabase();
 
     // POST /api/auth/login
@@ -95,6 +109,7 @@ exports.handler = async (event) => {
         return json(400, { error: 'Email and password are required' });
       }
 
+      console.log(JSON.stringify({ fn: 'login', q: 'admin_users.byEmail' }));
       const { data, error } = await supabase
         .from('admin_users')
         .select('id, email, password_hash')
@@ -102,7 +117,7 @@ exports.handler = async (event) => {
         .maybeSingle();
 
       if (error) {
-        console.error('[functions/auth/login] supabase error', error);
+        console.log(JSON.stringify({ fn: 'login', supabaseError: { code: error.code, message: error.message, details: error.details } }));
         return json(500, { error: 'Server error' });
       }
       if (!data) return json(401, { error: 'Invalid credentials' });
@@ -141,7 +156,7 @@ exports.handler = async (event) => {
 
     return json(404, { error: 'Not found' });
   } catch (e) {
-    console.error('[functions/api] unexpected', e);
+    console.log(JSON.stringify({ fn: 'api', unexpected: { message: e?.message, stack: e?.stack } }));
     return json(500, { error: 'Server error' });
   }
 };
